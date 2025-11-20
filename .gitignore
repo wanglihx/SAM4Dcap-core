@@ -8,6 +8,9 @@ dist/
 build/
 *.egg-info/
 
+# Auto-generated version file
+mhr/_version.py
+
 # Testing
 .pytest_cache/
 .coverage

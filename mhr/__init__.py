@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-__version__ = "0.1.0"
+try:
+    from ._version import __version__
+except ImportError:
+    __version__ = "0.0.0+unknown"
 
 __all__ = ["__version__"]

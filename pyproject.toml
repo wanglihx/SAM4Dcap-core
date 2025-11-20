@@ -1,12 +1,14 @@
 [project]
 authors = [{name = "MHR Contributors"}]
-dependencies = ["torch", "trimesh>=4.8.3,<5", "pytest>=8.0"]
+dependencies = ["torch", "trimesh>=4.8.3,<5"]
 name = "mhr"
 requires-python = ">= 3.11"
-version = "0.1.0"
-
+dynamic = ["version"]
 readme = "README.md"
 license = {text = "Apache-2.0"}
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
 
 [project.urls]
 Homepage = "https://github.com/facebookresearch/MHR"
@@ -14,7 +16,16 @@ Repository = "https://github.com/facebookresearch/MHR"
 
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+version_scheme = "post-release"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "mhr/_version.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["mhr"]
@@ -25,16 +36,18 @@ platforms = ["osx-arm64", "linux-64"]
 
 [tool.pixi.tasks]
 test = { cmd = "pytest tests/ -v", description = "Run pytest tests with verbose output" }
-build = { cmd = "python -m build", description = "Build source distribution and wheel" }
-publish = { cmd = "twine upload --repository mhr dist/*", description = "Publish package to PyPI repository" }
-clean = { cmd = "rm -rf dist build *.egg-info", description = "Remove build artifacts and distribution files" }
-test_wheel = { cmd = "python scripts/test_wheel.py", description = "Test the built wheel in a fresh environment using uv" }
+wheel-clean = { cmd = "rm -rf dist build *.egg-info", description = "Wheel: Clean build artifacts and distribution files" }
+wheel-build = { cmd = "python -m build", description = "Wheel: Build source distribution and wheel package" }
+wheel-test = { cmd = "python scripts/test_wheel.py", description = "Wheel: Test built wheel in fresh environment using uv" }
+wheel-publish = { cmd = "twine upload --repository mhr dist/*", description = "Wheel: Publish wheel package to PyPI" }
 
 [tool.pixi.pypi-dependencies]
-mhr = { path = ".", editable = true }
+pytest = ">=8.0"
 build = ">=1.0"
 twine = ">=5.0"
 uv = ">=0.5.0"
+hatchling = "*"
+hatch-vcs = "*"
 
 [tool.pixi.dependencies]
 pymomentum = ">=0.1.90"

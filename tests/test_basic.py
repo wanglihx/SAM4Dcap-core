@@ -16,4 +16,6 @@ import mhr
 
 
 def test_import():
-    assert mhr.__version__ == "0.1.0"
+    assert hasattr(mhr, "__version__")
+    assert isinstance(mhr.__version__, str)
+    assert len(mhr.__version__) > 0
