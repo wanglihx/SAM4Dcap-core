@@ -417,7 +417,7 @@ def on_mask_generation(video_path: str):
 
     # run propagation throughout the video and collect the results in a dict
     video_segments = {}  # video_segments contains the per-frame segmentation results
-    for frame_idx, obj_ids, low_res_masks, video_res_masks, obj_scores in predictor.propagate_in_video(
+    for frame_idx, obj_ids, low_res_masks, video_res_masks, obj_scores, iou_scores in predictor.propagate_in_video(
         RUNTIME['inference_state'],
         start_frame_idx=0,
         max_frame_num_to_track=1800,
@@ -427,7 +427,7 @@ def on_mask_generation(video_path: str):
         video_segments[frame_idx] = {
             out_obj_id: (video_res_masks[i] > 0.0).cpu().numpy()
             for i, out_obj_id in enumerate(RUNTIME['out_obj_ids'])
-        }
+        } 
 
     # render the segmentation results every few frames
     vis_frame_stride = 1
@@ -514,32 +514,13 @@ def on_4d_generation(video_path: str):
     for i in tqdm(range(0, n, batch_size)):
         batch_images = images_list[i:i + batch_size]
         batch_masks  = masks_list[i:i + batch_size]
-    # for image_path, mask_path in tqdm(zip(images_list, masks_list)):
-        # # Load and display the mask
-        # img_cv2 = cv2.imread(image_path)
-        # # mask_img = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
-        # image_name = os.path.splitext(os.path.basename(image_path))[0]
-        
+    
         # Process with external mask
-        mask_outputs = process_image_with_mask(sam3_3d_body_model, batch_images, batch_masks)
+        mask_outputs, id_batch = process_image_with_mask(sam3_3d_body_model, batch_images, batch_masks)
         
-        # # Visualize and save results
-        # if mask_outputs:
-        #     mask_mesh_results = visualize_3d_mesh(img_cv2, mask_outputs, sam3_3d_body_model.faces)
-            
-        #     # for i, combined_img in enumerate(mask_mesh_results):
-        #     #     combined_rgb = cv2.cvtColor(combined_img, cv2.COLOR_BGR2RGB)
-
-        #     # Save results
-        #     mask_output_dir = f"{OUTPUT_DIR}/mask_4d/mask_based_{image_name}"
-        #     mask_ply_files = save_mesh_results(img_cv2, mask_outputs, sam3_3d_body_model.faces, mask_output_dir, f"mask_{image_name}")
-        #     print(f"Saved mask-based results to: {mask_output_dir}")
-
-        for image_path, mask_output in zip(batch_images, mask_outputs):
+        for image_path, mask_output, id_current in zip(batch_images, mask_outputs, id_batch):
             img = cv2.imread(image_path)
-            rend_img = visualize_sample_together(img, mask_output, sam3_3d_body_model.faces)
-            # H, W = rend_img.shape[:2]
-            # crop = rend_img[:, W//2 : (W*3)//4]
+            rend_img = visualize_sample_together(img, mask_output, sam3_3d_body_model.faces, id_current)
             cv2.imwrite(
                 f"{OUTPUT_DIR}/mask_4d/{os.path.basename(image_path)[:-4]}.jpg",
                 rend_img.astype(np.uint8),

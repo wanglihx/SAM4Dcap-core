@@ -15,6 +15,8 @@ from sam_3d_body.metadata.mhr70 import pose_info as mhr70_pose_info
 from sam_3d_body.visualization.renderer import Renderer
 from sam_3d_body.visualization.skeleton_visualizer import SkeletonVisualizer
 
+from PIL import Image
+
 LIGHT_BLUE = (0.65098039, 0.74117647, 0.85882353)
 
 
@@ -338,19 +340,24 @@ def process_image_with_mask(estimator, image_path: str, mask_path: str):
     bbox_batch = []
     mask_batch = []
     n = len(image_path)
+    id_batch = []
     for i in range(n):
         # Load mask
-        mask = cv2.imread(mask_path[i], cv2.IMREAD_GRAYSCALE)
+        mask = np.array(Image.open(mask_path[i]).convert('P'))
+        # mask = cv2.imread(mask_path[i], cv2.IMREAD_GRAYSCALE)
         obj_ids = np.unique(mask)
-        obj_ids = obj_ids[obj_ids != 0]
+        obj_ids = obj_ids[obj_ids != 0].astype(int).tolist()
 
         mask_list = []
         bbox_list = []
+        id_current = []
         for obj_id in obj_ids:
             zero_mask = np.zeros_like(mask)
             zero_mask[mask==obj_id] = 255
             mask_binary = zero_mask.astype(np.uint8)
             mask_list.append(mask_binary)
+            # if mask.max() > 0:
+            #     id_current.append(obj_id)
 
             # print(f"Processing image with external mask: {mask_path}")
             # print(f"Mask shape: {mask_binary.shape}, unique values: {np.unique(mask_binary)}")
@@ -358,9 +365,11 @@ def process_image_with_mask(estimator, image_path: str, mask_path: str):
             # Compute bounding box from mask (required by refactored code)
             # Find all non-zero pixels in the mask
             coords = cv2.findNonZero(mask_binary)
-            if coords is None:
-                print("Warning: Mask is empty, no objects detected")
-                return []
+            # if coords is None:
+                # print("Warning: Mask is empty, no objects detected")
+                # return []
+            if mask_binary.max() > 0:
+                id_current.append(obj_id)
 
             # Get bounding box from mask contours
             x, y, w, h = cv2.boundingRect(coords)
@@ -369,6 +378,7 @@ def process_image_with_mask(estimator, image_path: str, mask_path: str):
             # print(f"Computed bbox from mask: {bbox[0]}")
             bbox_list.append(bbox)
 
+        id_batch.append(id_current)
         bbox = np.stack(bbox_list, axis=0)
         mask_binary = np.stack(mask_list, axis=0)
         # Process with external mask and computed bbox
@@ -377,6 +387,6 @@ def process_image_with_mask(estimator, image_path: str, mask_path: str):
         mask_batch.append(mask_binary)
         bbox_batch.append(bbox)
     
-    outputs = estimator.process_frames(image_batch, bboxes=bbox_batch, masks=mask_batch)
+    outputs = estimator.process_frames(image_batch, bboxes=bbox_batch, masks=mask_batch, id_batch=id_batch)
 
-    return outputs
+    return outputs, id_batch

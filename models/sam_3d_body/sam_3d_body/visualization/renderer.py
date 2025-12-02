@@ -11,6 +11,7 @@ import numpy as np
 import pyrender
 import torch
 import trimesh
+import colorsys
 
 
 def get_light_poses(n_lights=5, elevation=np.pi / 3, dist=12):
@@ -271,6 +272,8 @@ class Renderer:
         tri_color_lights=False,
         return_rgba=False,
         camera_center=None,
+        id_batch=None,
+        id_sorted=None,
     ) -> np.array:
         """
         Render meshes on the input image.
@@ -314,10 +317,12 @@ class Renderer:
         for pid in range(N):
             start = pid * V
             end = start + V
-
             # mesh_base_color must be list-like: [(r,g,b), ...]
             color = mesh_base_color[pid]
-            rgba = np.array([color[0], color[1], color[2], 1.0]) * 255
+            # rgba = np.array([color[0], color[1], color[2], 1.0]) * 255
+            r, g, b = colorsys.hsv_to_rgb(color[0], color[1], color[2])
+            rgba = np.array([r, g, b, 1.0], dtype=np.float32) * 255
+            # rgba = np.array([color[2], color[1], color[0], 1.0], dtype=np.float32) * 255
             vertex_colors[start:end] = rgba
 
         # Create a single trimesh with per-vertex colors

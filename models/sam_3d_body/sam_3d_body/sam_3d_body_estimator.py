@@ -72,6 +72,7 @@ class SAM3DBodyEstimator:
         nms_thr: float = 0.3,
         use_mask: bool = False,
         inference_type: str = "full",
+        id_batch: Optional[List[List[int]]] = None,
     ):
         """
         Perform model prediction in top-down format: assuming input is a full image.
@@ -89,6 +90,8 @@ class SAM3DBodyEstimator:
                 - hand: inference with hand decoder only (only hand output)
         """
 
+        max_N = max(t.shape[0] for t in bboxes)
+
         # clear all cached results
         self.batch = None
         self.image_embeddings = None
@@ -98,7 +101,6 @@ class SAM3DBodyEstimator:
 
         batch_list = []
         image_list =[]
-        num_objs_per_image = []
         for i, img in enumerate(img_list):
             if type(img) == str:
                 img = load_image(img, backend="cv2", image_format="bgr")
@@ -130,7 +132,6 @@ class SAM3DBodyEstimator:
                 boxes = np.array([0, 0, width, height]).reshape(1, 4)
                 self.is_crop = False
 
-            num_objs_per_image.append(len(boxes))
             # If there are no detected humans, don't run prediction
             if len(boxes) == 0:
                 # return []
@@ -161,6 +162,11 @@ class SAM3DBodyEstimator:
                 masks, masks_score = None, None
 
         #################### Construct batch data samples ####################
+            if len(boxes) < max_N:  # padding if no objects detected
+                pad = max_N - len(boxes)
+                boxes = np.concatenate([boxes, np.repeat(boxes[-1][None, :], pad, axis=0)], axis=0)
+                masks_binary = np.concatenate([masks_binary, np.repeat(masks_binary[-1][None, :], pad, axis=0)], axis=0)
+
             batch = prepare_batch(img, self.transform, boxes, masks_binary, masks_score)
 
         # Handle camera intrinsics
@@ -227,6 +233,8 @@ class SAM3DBodyEstimator:
         for b_idx in range(batch_dict["img"].shape[0]):    # batch 
             all_out = []
             for idx in range(batch_dict["img"].shape[1]):    # person
+                if (idx+1) not in id_batch[b_idx]:
+                    continue
                 all_out.append(
                     {
                         "bbox": batch_dict["bbox"][b_idx, idx].cpu().numpy(),

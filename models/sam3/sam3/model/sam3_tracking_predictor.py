@@ -836,6 +836,7 @@ class Sam3TrackerPredictor(Sam3TrackerBase):
                 current_out = output_dict[storage_key][frame_idx]
                 pred_masks = current_out["pred_masks"]
                 obj_scores = current_out["object_score_logits"]
+                iou_scores = current_out['iou_score']
                 if clear_non_cond_mem:
                     # clear non-conditioning memory of the surrounding frames
                     self._clear_non_cond_mem_around_input(inference_state, frame_idx)
@@ -844,6 +845,7 @@ class Sam3TrackerPredictor(Sam3TrackerBase):
                 current_out = output_dict[storage_key][frame_idx]
                 pred_masks = current_out["pred_masks"]
                 obj_scores = current_out["object_score_logits"]
+                iou_scores = current_out['iou_score'].unsqueeze(1)
             else:
                 storage_key = "non_cond_frame_outputs"
                 current_out, pred_masks = self._run_single_frame_inference(
@@ -858,6 +860,7 @@ class Sam3TrackerPredictor(Sam3TrackerBase):
                     run_mem_encoder=run_mem_encoder,
                 )
                 obj_scores = current_out["object_score_logits"]
+                iou_scores = current_out['iou_score'].unsqueeze(1)
                 output_dict[storage_key][frame_idx] = current_out
             # Create slices of per-object outputs for subsequent interaction with each
             # individual object after tracking.
@@ -871,7 +874,7 @@ class Sam3TrackerPredictor(Sam3TrackerBase):
             low_res_masks, video_res_masks = self._get_orig_video_res_output(
                 inference_state, pred_masks
             )
-            yield frame_idx, obj_ids, low_res_masks, video_res_masks, obj_scores
+            yield frame_idx, obj_ids, low_res_masks, video_res_masks, obj_scores, iou_scores
 
     def _add_output_per_object(
         self, inference_state, frame_idx, current_out, storage_key
