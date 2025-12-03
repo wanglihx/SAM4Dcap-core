@@ -21,7 +21,7 @@ sys.path.append(os.path.join(current_dir, 'models', 'sam_3d_body'))
 sys.path.append(os.path.join(current_dir, 'models', 'diffusion_vas'))
 
 # import sam3
-from utils import draw_point_marker, mask_painter, images_to_mp4, DAVIS_PALETTE, jpg_folder_to_mp4
+from utils import draw_point_marker, mask_painter, images_to_mp4, DAVIS_PALETTE, jpg_folder_to_mp4, is_super_long_or_wide, resize_mask_with_unique_label, keep_largest_component
 
 from models.sam_3d_body.sam_3d_body import load_sam_3d_body, SAM3DBodyEstimator
 from models.sam_3d_body.notebook.utils import process_image_with_mask
@@ -630,6 +630,7 @@ def on_4d_generation(video_path: str):
                 pred_amodal_masks_com = [np.array(img.resize((pred_res_hi[1], pred_res_hi[0]))) for img in pred_amodal_masks]
                 pred_amodal_masks_com = np.array(pred_amodal_masks_com).astype('uint8')
                 pred_amodal_masks_com = (pred_amodal_masks_com.sum(axis=-1) > 600).astype('uint8')
+                pred_amodal_masks_com = [keep_largest_component(pamc) for pamc in pred_amodal_masks_com]
                 pred_amodal_masks_dict[obj_id] = pred_amodal_masks_com
                 # for iou
                 pred_amodal_masks = [np.array(img.resize((W, H))) for img in pred_amodal_masks]
@@ -637,14 +638,26 @@ def on_4d_generation(video_path: str):
                 pred_amodal_masks = (pred_amodal_masks.sum(axis=-1) > 600).astype('uint8')
                 # compute iou
                 masks = [(np.array(Image.open(bm).convert('P'))==obj_id).astype('uint8') for bm in batch_masks]
-                ious = [
-                    (
-                        1.0 if ((a > 0).sum() == 0 and (b > 0).sum() == 0)
-                        else np.logical_and(a > 0, b > 0)[(a > 0) | (b > 0)].sum() /
-                            (np.logical_or(a > 0, b > 0)[(a > 0) | (b > 0)].sum() + 1e-6)
-                    )
-                    for a, b in zip(masks, pred_amodal_masks)
-                ]
+                ious = []
+                for a, b in zip(masks, pred_amodal_masks):
+                    area_a = (a > 0).sum()
+                    area_b = (b > 0).sum()
+                    if area_a == 0 and area_b == 0:
+                        ious.append(1.0)
+                    elif area_a > area_b:
+                        ious.append(1.0)
+                    else:
+                        inter = np.logical_and(a > 0, b > 0).sum()
+                        uni = np.logical_or(a > 0, b > 0).sum()
+                        ious.append(inter / (uni + 1e-6))
+
+                # remove fake completions (empty or from MARGINs)
+                for pi, pamc in enumerate(pred_amodal_masks_com):
+                    # zero predictions, back to original masks
+                    if masks[pi].sum() > pred_amodal_masks[pi].sum():
+                        pred_amodal_masks_com[pi] = resize_mask_with_unique_label(masks[pi], pred_res_hi[0], pred_res_hi[1], obj_id)
+                    elif is_super_long_or_wide(pamc, obj_id):
+                        pred_amodal_masks_com[pi] = resize_mask_with_unique_label(masks[pi], pred_res_hi[0], pred_res_hi[1], obj_id)
                 
                 # confirm occlusions & save masks (for HMR)
                 start, end = (idxs := [ix for ix,x in enumerate(ious) if x < 0.7]) and (idxs[0], idxs[-1]) or (None, None)
@@ -679,7 +692,7 @@ def on_4d_generation(video_path: str):
                 pred_amodal_masks_current = np.logical_or(pred_amodal_masks_current, modal_mask_union).astype('uint8')
                 pred_amodal_masks_tensor = torch.from_numpy(np.where(pred_amodal_masks_current == 0, -1, 1)).float().unsqueeze(0).unsqueeze(
                     2).repeat(1, 1, 3, 1, 1)
-                
+
                 rgb_pixels_current = rgb_pixels_current[:, i:i + batch_size, :, :, :][:, start:end]
                 modal_obj_mask = (modal_pixels_current > 0).float()
                 modal_background = 1 - modal_obj_mask

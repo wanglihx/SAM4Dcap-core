@@ -351,11 +351,25 @@ def process_image_with_mask(estimator, image_path: str, mask_path: str, idx_path
         bbox_list = []
         id_current = []
         for obj_id in obj_ids:
-
             if obj_id in idx_dict:
                 start, end = idx_dict[obj_id]
                 if i >= start and i < end:
-                    mask = np.array(Image.open(os.path.join(idx_path[obj_id]['masks'], f"{i:08d}.png")).convert('P'))
+                    mask_com = np.array(Image.open(os.path.join(idx_path[obj_id]['masks'], f"{i:08d}.png")).convert('P')) 
+                    zero_mask = np.zeros_like(mask_com)
+                    zero_mask[mask_com==obj_id] = 255
+                    mask_binary = zero_mask.astype(np.uint8)
+                    mask_list.append(mask_binary)
+                    # Compute bounding box from mask (required by refactored code)
+                    # Find all non-zero pixels in the mask
+                    coords = cv2.findNonZero(mask_binary)
+                    if mask_binary.max() > 0:
+                        id_current.append(obj_id)
+                    # Get bounding box from mask contours
+                    x, y, w, h = cv2.boundingRect(coords)
+                    bbox = np.array([[x, y, x + w, y + h]], dtype=np.float32)
+                    # print(f"Computed bbox from mask: {bbox[0]}")
+                    bbox_list.append(bbox)
+                    continue
 
             zero_mask = np.zeros_like(mask)
             zero_mask[mask==obj_id] = 255
