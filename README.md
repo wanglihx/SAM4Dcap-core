@@ -1,13 +1,13 @@
-# SAM-4D-Body
+# SAM-Body4D
 
-Promptable Human Mesh Recovery from Videos, based on [SAM-3](https://github.com/facebookresearch/sam3) and [SAM-3D-Body](https://github.com/facebookresearch/sam-3d-body).
+Training-Free 4D Human Mesh Recovery from Videos, based on [SAM-3](https://github.com/facebookresearch/sam3), [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas), and [SAM-3D-Body](https://github.com/facebookresearch/sam-3d-body).
 
 ## 🖥️ Installation
 
 #### 1. Create and Activate Environment
 ```
-conda create -n 4db python=3.12 -y
-conda activate 4db
+conda create -n body4d python=3.12 -y
+conda activate body4d
 ```
 #### 2. Install PyTorch (choose the version that matches your CUDA), Detectron, and SAM3
 ```
@@ -24,9 +24,9 @@ pip install -e .
 ```
 
 ## 🚀 Run the Demo
-#### 1. Download checkpoints of [SAM3](https://huggingface.co/facebook/sam3), [SAM-3D-Body](https://huggingface.co/facebook/sam-3d-body-dinov3), and [MoGe-2](https://huggingface.co/Ruicheng/moge-2-vitl-normal)
+#### 1. Download checkpoints of [SAM3](https://huggingface.co/facebook/sam3), [SAM-3D-Body](https://huggingface.co/facebook/sam-3d-body-dinov3), [MoGe-2](https://huggingface.co/Ruicheng/moge-2-vitl-normal), and [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas?tab=readme-ov-file#download-checkpoints)
 
-#### 2. Set checkpoint path in [`configs/4db.yaml`](configs/4db.yaml)
+#### 2. Set checkpoint path and running configs in [`configs/body4d.yaml`](configs/body4d.yaml)
 
 #### 3. Run:
 ```
@@ -38,4 +38,4 @@ python app.py
 
 ## 👏 Acknowledgements
 
-The project is built upon [SAM-3](https://github.com/facebookresearch/sam3) and [SAM-3D-Body](https://github.com/facebookresearch/sam-3d-body). We sincerely thank the original authors for their outstanding work and contributions. 
+The project is built upon [SAM-3](https://github.com/facebookresearch/sam3), [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas) and [SAM-3D-Body](https://github.com/facebookresearch/sam-3d-body). We sincerely thank the original authors for their outstanding work and contributions. 

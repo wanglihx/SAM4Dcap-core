@@ -3,9 +3,9 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sam3-4d-body"
+name = "sam-body4d"
 version = "0.1.0"
-description = "SAM3-4D-Body"
+description = "SAM-Body4D: Training-Free 4D Human Body Mesh Recovery from Videos"
 readme = "README.md"
 requires-python = ">=3.12"
 

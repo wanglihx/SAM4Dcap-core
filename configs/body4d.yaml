@@ -1,0 +1,27 @@
+sam3:
+  ckpt_path: "path to /sam3/sam3.pt"
+
+sam_3d_body:
+  ckpt_path: "path to /sam-3d-body-dinov3/model.ckpt"
+  mhr_path: "path to /sam-3d-body-dinov3/assets/mhr_model.pt"
+  fov_path: "path to /moge-2-vitl-normal/model.pt"
+  # num of frames processed in parallel
+  batch_size: 64
+  detector_path: ""
+  segmentor_path: ""
+
+runtime:
+  output_dir: "./outputs"
+
+completion:
+  # enables completion module (much slower)
+  # suggested for short sequences with significant occlusions
+  enable: true
+  detection_resolution: [256, 512]
+  completion_resolution: [512, 1024]
+  model_path_mask: "path to /checkpoints/diffusion-vas-amodal-segmentation"
+  model_path_rgb: "path to /checkpoints/diffusion-vas-content-completion"
+  depth_encoder: "vitl"
+  model_path_depth: "path to /dav2"
+  # max number of continuous frames with occlusions
+  max_occ_len: 25

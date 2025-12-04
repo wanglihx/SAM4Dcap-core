@@ -96,8 +96,6 @@ def build_sam3_from_config(cfg):
 
 def build_sam3_3d_body_config(cfg):
     mhr_path = cfg.sam_3d_body['mhr_path']
-    detector_path = cfg.sam_3d_body['detector_path']
-    segmentor_path = cfg.sam_3d_body['segmentor_path']
     fov_path = cfg.sam_3d_body['fov_path']
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     model, model_cfg = load_sam_3d_body(
@@ -105,10 +103,6 @@ def build_sam3_3d_body_config(cfg):
     )
     
     human_detector, human_segmentor, fov_estimator = None, None, None
-    from models.sam_3d_body.tools.build_detector import HumanDetector
-    # human_detector = HumanDetector(
-    #     name='vitdet', device=device, path=detector_path
-    # )
     from models.sam_3d_body.tools.build_fov_estimator import FOVEstimator
     fov_estimator = FOVEstimator(name='moge2', device=device, path=fov_path)
 
@@ -140,50 +134,6 @@ def build_diffusion_vas_config(cfg):
     return pipeline_mask, pipeline_rgb, depth_model, max_occ_len, generator
 
 
-from concurrent.futures import ThreadPoolExecutor
-
-def build_all_models_parallel(CONFIG):
-    enable = CONFIG.completion.get("enable", False)
-
-    # -------- parallel part: SAM3 / SAM3D / Depth --------
-    with ThreadPoolExecutor(max_workers=3) as ex:
-        fut_sam3 = ex.submit(build_sam3_from_config, CONFIG)
-        fut_body = ex.submit(build_sam3_3d_body_config, CONFIG)
-
-        if enable:
-            cfg = CONFIG.completion
-            depth_encoder = cfg["depth_encoder"]
-            depth_ckpt = cfg["model_path_depth"] + f"/depth_anything_v2_{depth_encoder}.pth"
-            fut_depth = ex.submit(init_depth_model, depth_ckpt, depth_encoder, device)
-
-    sam3_model, predictor = fut_sam3.result()
-    sam3_3d_body_model = fut_body.result()
-
-    if not enable:
-        return sam3_model, predictor, sam3_3d_body_model, None, None, None, None, None
-
-    depth_model = fut_depth.result()
-
-    # -------- sequential part: HF pipelines --------
-    cfg = CONFIG.completion
-    pipeline_mask = init_amodal_segmentation_model(cfg["model_path_mask"], device)
-    pipeline_rgb  = init_rgb_model(cfg["model_path_rgb"], device)
-
-    max_occ_len = cfg["max_occ_len"]
-    generator = torch.manual_seed(23)
-
-    return (
-        sam3_model,
-        predictor,
-        sam3_3d_body_model,
-        pipeline_mask,
-        pipeline_rgb,
-        depth_model,
-        max_occ_len,
-        generator,
-    )
-
-
 def init_runtime(config_path: str = os.path.join(ROOT, "configs", "4db.yaml")):
     """Initialize CONFIG, SAM3_MODEL, and global RUNTIME dict."""
     global CONFIG, sam3_model, predictor, inference_state, sam3_3d_body_model, RUNTIME, OUTPUT_DIR, pipeline_mask \
@@ -196,14 +146,14 @@ def init_runtime(config_path: str = os.path.join(ROOT, "configs", "4db.yaml")):
         pipeline_mask, pipeline_rgb, depth_model, max_occ_len, generator = build_diffusion_vas_config(CONFIG)
     else:
         pipeline_mask, pipeline_rgb, depth_model, max_occ_len, generator = None, None, None, None, None
-
-    # sam3_model, predictor, sam3_3d_body_model, pipeline_mask, pipeline_rgb, depth_model, max_occ_len, generator = build_all_models_parallel(CONFIG)
-
+    
     OUTPUT_DIR = os.path.join(CONFIG.runtime['output_dir'], gen_id())
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     RUNTIME = {}  # clear any old state
     RUNTIME['batch_size'] = CONFIG.sam_3d_body.get('batch_size', 1)
+    RUNTIME['detection_resolution'] = CONFIG.completion.get('detection_resolution', [256, 512])
+    RUNTIME['completion_resolution'] = CONFIG.completion.get('completion_resolution', [512, 1024])
 
 # ===============================
 # Paths & supported formats
@@ -213,8 +163,7 @@ EXAMPLE_1 = os.path.join(ROOT, "examples", "example1.mp4")
 EXAMPLE_2 = os.path.join(ROOT, "examples", "example2.mp4")
 EXAMPLE_3 = os.path.join(ROOT, "examples", "example3.mp4")
 
-SUPPORTED_EXTS = {".mp4", ".mov", ".avi", ".mkv", ".webm", ".mpg", ".mpeg", ".m4v"}
-
+SUPPORTED_EXTS = {".mp4",}
 
 # ===============================
 # Video utilities
@@ -585,8 +534,8 @@ def on_4d_generation(video_path: str):
     n = len(images_list)
     
     # Optional, detect occlusions
-    pred_res = [512, 1024]
-    pred_res_hi = [512, 1024]
+    pred_res = RUNTIME['detection_resolution']
+    pred_res_hi = RUNTIME['completion_resolution']
     modal_pixels_list = []
     if pipeline_mask is not None:
         for obj_id in RUNTIME['out_obj_ids']:
