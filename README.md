@@ -1,6 +1,8 @@
 # SAM-Body4D
 
-Training-Free 4D Human Mesh Recovery from Videos, based on [SAM-3](https://github.com/facebookresearch/sam3), [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas), and [SAM-3D-Body](https://github.com/facebookresearch/sam-3d-body).
+SAM-Body4D is a training-free framework for 4D human mesh recovery from in-the-wild videos, featuring: 🔄 temporally consistent human mesh reconstruction and 🎯 robust performance in complex real-world scenes.
+
+<!-- Training-Free 4D Human Mesh Recovery from Videos, based on [SAM-3](https://github.com/facebookresearch/sam3), [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas), and [SAM-3D-Body](https://github.com/facebookresearch/sam-3d-body). -->
 
 ## 🖥️ Installation
 

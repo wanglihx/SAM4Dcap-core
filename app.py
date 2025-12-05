@@ -134,7 +134,7 @@ def build_diffusion_vas_config(cfg):
     return pipeline_mask, pipeline_rgb, depth_model, max_occ_len, generator
 
 
-def init_runtime(config_path: str = os.path.join(ROOT, "configs", "4db.yaml")):
+def init_runtime(config_path: str = os.path.join(ROOT, "configs", "body4d.yaml")):
     """Initialize CONFIG, SAM3_MODEL, and global RUNTIME dict."""
     global CONFIG, sam3_model, predictor, inference_state, sam3_3d_body_model, RUNTIME, OUTPUT_DIR, pipeline_mask \
         , pipeline_rgb, depth_model, max_occ_len, generator

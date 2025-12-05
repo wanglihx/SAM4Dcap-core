@@ -3,5 +3,5 @@ __pycache__/
 gradio_tmp/
 outputs/
 *.egg-info
-4db.yaml
+body4d.yaml
 save_masks.py
