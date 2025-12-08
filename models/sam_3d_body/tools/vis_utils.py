@@ -41,7 +41,10 @@ def visualize_sample_together(img_cv2, outputs, faces, id_current):
 	img_mesh = np.ones_like(img_mesh) * 255
 
 	# First, sort by depth, furthest to closest
-	all_depths = np.stack([tmp['pred_cam_t'] for tmp in outputs], axis=0)[:, 2]
+	try:
+		all_depths = np.stack([tmp['pred_cam_t'] for tmp in outputs], axis=0)[:, 2]
+	except:
+		return img_mesh
 	outputs_sorted = [outputs[idx] for idx in np.argsort(-all_depths)]
 
 	id_sorted = np.argsort(-all_depths)   # by id not depth for consistent coloring

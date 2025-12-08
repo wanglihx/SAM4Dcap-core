@@ -374,6 +374,14 @@ def process_image_with_mask(estimator, image_path: str, mask_path: str, idx_path
             zero_mask = np.zeros_like(mask)
             zero_mask[mask==obj_id] = 255
             mask_binary = zero_mask.astype(np.uint8)
+
+            # mute objects near margin
+            H, W = mask_binary.shape
+            mask_binary_cp = mask_binary.copy()
+            mask_binary_cp[:int(H*0.05), :] = mask_binary_cp[-int(H*0.05):, :] = mask_binary_cp[:, :int(W*0.05)] = mask_binary_cp[:, -int(W*0.05):] = 0
+            if mask_binary_cp.max() == 0:   # margin objects
+                mask_binary = mask_binary_cp
+
             mask_list.append(mask_binary)
             # Compute bounding box from mask (required by refactored code)
             # Find all non-zero pixels in the mask
@@ -390,7 +398,7 @@ def process_image_with_mask(estimator, image_path: str, mask_path: str, idx_path
             bbox_list.append(bbox)
 
         id_batch.append(id_current)
-        bbox = np.stack(bbox_list, axis=0)
+        bbox = np.stack(bbox_list, axis=0)  # TODO: sometimes empty
         mask_binary = np.stack(mask_list, axis=0)
         # Process with external mask and computed bbox
         # Note: The mask needs to match the number of bboxes (1 bbox -> 1 mask)

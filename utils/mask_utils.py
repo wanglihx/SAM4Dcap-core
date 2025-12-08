@@ -101,3 +101,81 @@ def is_skinny_mask(mask, ratio_threshold=1/5):
     # Check if the object is considered skinny
     return ratio < ratio_threshold
 
+def bbox_from_mask(mask):
+    """
+    Compute the center coordinates, width, and height of the bounding box
+    surrounding the foreground (mask > 0).
+
+    Args:
+        mask (np.ndarray): Binary mask of shape (H, W), foreground=1, background=0.
+
+    Returns:
+        tuple or None: (cx, cy, width, height)
+            - cx, cy: center coordinates of the bounding box
+            - width, height: size of the bounding box
+        None: if no foreground pixels exist
+    """
+
+    # Find coordinates of foreground pixels
+    ys, xs = np.where(mask > 0)
+
+    # If mask has no foreground, return None
+    if len(xs) == 0:
+        return None
+
+    # Compute bounding box min/max
+    x_min, x_max = xs.min(), xs.max()
+    y_min, y_max = ys.min(), ys.max()
+
+    # Width and height of the bounding box
+    width = x_max - x_min + 1
+    height = y_max - y_min + 1
+
+    # Compute the center of the bounding box (float for precision)
+    cx = x_min + width / 2.0
+    cy = y_min + height / 2.0
+
+    return (cx, cy, width, height)
+
+
+def are_bboxes_similar(bbox1, bbox2,
+                       size_ratio_thresh=0.2,
+                       center_ratio_thresh=0.5):
+    """
+    Check whether two bboxes are similar.
+    Size (width/height) is the primary criterion, center (cx, cy) is secondary.
+
+    Args:
+        bbox1, bbox2 (tuple): (cx, cy, width, height).
+        size_ratio_thresh (float): Max allowed relative difference for width/height.
+        center_ratio_thresh (float): Max allowed center distance normalized
+                                     by average bbox size.
+
+    Returns:
+        bool: True if bboxes are considered similar, False otherwise.
+    """
+    if bbox1 is None or bbox2 is None:
+        return False
+
+    cx1, cy1, w1, h1 = bbox1
+    cx2, cy2, w2, h2 = bbox2
+
+    # --- 1) Size similarity (primary) ---
+    # Relative difference for width/height, smaller is more similar.
+    w_diff = abs(w1 - w2) / max(w1, w2)
+    h_diff = abs(h1 - h2) / max(h1, h2)
+
+    if w_diff > size_ratio_thresh or h_diff > size_ratio_thresh:
+        # Sizes are too different → not similar
+        return False
+
+    # --- 2) Center similarity (secondary) ---
+    # Normalize center distance by average of bbox sizes
+    avg_size = (w1 + h1 + w2 + h2) / 4.0
+    center_dist = np.sqrt((cx1 - cx2) ** 2 + (cy1 - cy2) ** 2)
+    center_norm = center_dist / (avg_size + 1e-6)
+
+    if center_norm > center_ratio_thresh:
+        return False
+
+    return True

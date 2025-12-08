@@ -1694,7 +1694,6 @@ class SAM3DBody(BaseModel):
 
         # Step 2. Re-run with each hand
         ## Left... Flip image & box
-
         batch_lhand_list = []
         batch_lhand_dict = {}
         tmp = left_xyxy.copy()
