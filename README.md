@@ -2,11 +2,14 @@
 
 # 🏂 SAM-Body4D
 
-[ 📖 [`Paper`](assets/SAM_Body4D.pdf)] [ 🌐 [`Website` (coming soon)](https://seominseok0429.github.io/Upsample-Anything/)] [ 📝 [`BibTeX` (coming soon)](#-citation)]
+[Mingqi Gao](https://mingqigao.com)<sup>1</sup>, [Yunqi Miao](https://yoqim.github.io/)<sup>2</sup>, [Jungong Han](https://jungonghan.github.io/)<sup>3</sup>
 
+<sup>1</sup> University of Sheffield, <sup>2</sup> University of Warwick, <sup>3</sup> Tsinghua University
 
 **SAM-Body4D** is a **training-free** method for **temporally consistent** and **robust** 4D human mesh recovery from videos.
 By leveraging **pixel-level human continuity** from promptable video segmentation **together with occlusion recovery**, it reliably preserves identity and full-body geometry in challenging in-the-wild scenes.
+
+[ 📖 [`Paper`](assets/SAM_Body4D.pdf)] [ 🌐 [`Website` (coming soon)](https://seominseok0429.github.io/Upsample-Anything/)] [ 📝 [`BibTeX` (coming soon)](#-citation)]
 
 ### ✨ Key Features
 
