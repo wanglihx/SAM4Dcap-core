@@ -41,7 +41,7 @@ pip install -e .
 ```
 
 ## 🚀 Run the Demo
-#### 1. Download checkpoints of [SAM3](https://huggingface.co/facebook/sam3), [SAM-3D-Body](https://huggingface.co/facebook/sam-3d-body-dinov3), [MoGe-2](https://huggingface.co/Ruicheng/moge-2-vitl-normal), and [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas?tab=readme-ov-file#download-checkpoints)
+#### 1. Download checkpoints of [SAM3](https://huggingface.co/facebook/sam3), [SAM-3D-Body](https://huggingface.co/facebook/sam-3d-body-dinov3), [MoGe-2](https://huggingface.co/Ruicheng/moge-2-vitl-normal), [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas?tab=readme-ov-file#download-checkpoints), and [Depth-Anything V2](https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true)
 
 #### 2. Set checkpoint path and running configs in [`configs/body4d.yaml`](configs/body4d.yaml)
 

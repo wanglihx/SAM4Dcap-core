@@ -14,6 +14,7 @@ import torch.nn.functional as F
 import random
 import glob
 from tqdm import tqdm
+from omegaconf import OmegaConf
 
 import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -73,13 +74,6 @@ inference_state = None  # sam-3 inference_state
 RUNTIME = {}            # global dict to store runtime data per video/run
 
 
-def load_config(config_path: str):
-    """Load YAML config into a SimpleNamespace for convenient attribute access."""
-    with open(config_path, "r") as f:
-        cfg_dict = yaml.safe_load(f)
-    return SimpleNamespace(**cfg_dict)
-
-
 def build_sam3_from_config(cfg):
     """
     Construct and return your SAM-3 model from config.
@@ -128,7 +122,6 @@ def build_diffusion_vas_config(cfg):
 
     pipeline_mask = init_amodal_segmentation_model(model_path_mask)
     pipeline_rgb = init_rgb_model(model_path_rgb)
-    model_path_depth = model_path_depth + f"/depth_anything_v2_{depth_encoder}.pth"
     depth_model = init_depth_model(model_path_depth, depth_encoder)
 
     return pipeline_mask, pipeline_rgb, depth_model, max_occ_len, generator
@@ -138,7 +131,7 @@ def init_runtime(config_path: str = os.path.join(ROOT, "configs", "body4d.yaml")
     """Initialize CONFIG, SAM3_MODEL, and global RUNTIME dict."""
     global CONFIG, sam3_model, predictor, inference_state, sam3_3d_body_model, RUNTIME, OUTPUT_DIR, pipeline_mask \
         , pipeline_rgb, depth_model, max_occ_len, generator
-    CONFIG = load_config(config_path)
+    CONFIG = OmegaConf.load(config_path)
     sam3_model, predictor = build_sam3_from_config(CONFIG)
     sam3_3d_body_model = build_sam3_3d_body_config(CONFIG)
 

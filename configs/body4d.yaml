@@ -1,37 +1,41 @@
-# ------------------------------------------------------------
-# Global checkpoint root directory (only change here!)
-# ------------------------------------------------------------
+# ============================================================================
+# Configuration for SAM-Body4D
+# NOTE:
+#   All checkpoint paths below are relative to `paths.ckpt_root`.
+#   To relocate checkpoints, you only need to modify `ckpt_root`
+#   and the rest will update automatically.
+# ============================================================================
+
 paths:
-  ckpt_root: "path to /checkpoints"
-# ------------------------------------------------------------
-# SAM-3 configuration
-# ------------------------------------------------------------
+  # Set your global checkpoint root directory here
+  ckpt_root: "path to global checkpoint root"
+
 sam3:
-  ckpt_path: "${paths.ckpt_root}/sam3/sam3.pt"
-# ------------------------------------------------------------
-# SAM-3D-Body configuration
-# ------------------------------------------------------------
+  # download: https://huggingface.co/facebook/sam3
+  ckpt_path: ${paths.ckpt_root}/sam3/sam3.pt
+
 sam_3d_body:
-  ckpt_path: "${paths.ckpt_root}/sam-3d-body-dinov3/model.ckpt"
-  mhr_path: "${paths.ckpt_root}/sam-3d-body-dinov3/assets/mhr_model.pt"
-  fov_path: "${paths.ckpt_root}/moge-2-vitl-normal/model.pt"
+  # download (ckpt_path & mhr_path): https://huggingface.co/facebook/sam-3d-body-dinov3
+  ckpt_path: ${paths.ckpt_root}/sam-3d-body-dinov3/model.ckpt
+  mhr_path: ${paths.ckpt_root}/sam-3d-body-dinov3/assets/mhr_model.pt
+  # download (fov_path): https://huggingface.co/Ruicheng/moge-2-vitl-normal
+  fov_path: ${paths.ckpt_root}/moge-2-vitl-normal/model.pt
   batch_size: 64
   detector_path: ""
   segmentor_path: ""
-# ------------------------------------------------------------
-# Runtime configs
-# ------------------------------------------------------------
+
 runtime:
-  output_dir: "./outputs"
-# ------------------------------------------------------------
-# Completion (Diffusion-VAS) configs
-# ------------------------------------------------------------
+  output_dir: ./outputs
+
 completion:
   enable: true
   detection_resolution: [512, 1024]
   completion_resolution: [512, 1024]
-  model_path_mask: "${paths.ckpt_root}/diffusion-vas-amodal-segmentation"
-  model_path_rgb: "${paths.ckpt_root}/diffusion-vas-content-completion"
-  depth_encoder: "vitl"
-  model_path_depth: "${paths.ckpt_root}/dav2"
+  # download (xxx_mask & xxx_rgb): https://github.com/Kaihua-Chen/diffusion-vas?tab=readme-ov-file#download-checkpoints
+  model_path_mask: ${paths.ckpt_root}/diffusion-vas-amodal-segmentation
+  model_path_rgb:  ${paths.ckpt_root}/diffusion-vas-content-completion
+  # download (depth anything v2): https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true
+  model_path_depth: ${paths.ckpt_root}/depth_anything_v2_vitl.pth
+
+  depth_encoder: vitl
   max_occ_len: 25

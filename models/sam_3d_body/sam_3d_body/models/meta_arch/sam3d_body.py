@@ -2133,7 +2133,7 @@ class SAM3DBody(BaseModel):
                 num_frames=len(img_list),
                 frame_obj_ids=id_batch,
                 keys_to_smooth=["body_pose", "hand"],
-                kalman_cfg=kalman_cfg,
+                # kalman_cfg=kalman_cfg,
             )
 
             # -----------------
