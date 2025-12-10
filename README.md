@@ -24,6 +24,10 @@ By leveraging **pixel-level human continuity** from promptable video segmentatio
 
 <!-- Training-Free 4D Human Mesh Recovery from Videos, based on [SAM-3](https://github.com/facebookresearch/sam3), [Diffusion-VAS](https://github.com/Kaihua-Chen/diffusion-vas), and [SAM-3D-Body](https://github.com/facebookresearch/sam-3d-body). -->
 
+## Gradio Demo
+
+<video src="assets/gradio_demo.mp4" controls></video>
+
 ## 🖥️ Installation
 
 #### 1. Create and Activate Environment
