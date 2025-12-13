@@ -81,7 +81,7 @@ huggingface-cli login
 ```
 Then run the setup script:
 ```bash
-python scripts/setup.py --ckpt-root /path/to/checkpoints
+python scripts/setup.py --force --ckpt-root /path/to/checkpoints
 ```
 #### 2. Run
 ```bash
