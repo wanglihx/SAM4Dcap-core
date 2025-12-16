@@ -1,24 +1,31 @@
 import os
-
 ROOT = os.path.dirname(__file__)
 os.environ["GRADIO_TEMP_DIR"] = os.path.join(ROOT, "gradio_tmp")
-
-import time
-import cv2
-import gradio as gr
-from PIL import Image
-import numpy as np
-import torch.nn.functional as F
-
-import random
-import glob
-from tqdm import tqdm
-from omegaconf import OmegaConf
 
 import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_dir, 'models', 'sam_3d_body'))
 sys.path.append(os.path.join(current_dir, 'models', 'diffusion_vas'))
+
+import uuid
+from datetime import datetime
+
+def gen_id():
+    t = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
+    u = uuid.uuid4().hex[:8]
+    return f"{t}_{u}"
+
+import time
+import cv2
+import glob
+import random
+import gradio as gr
+import numpy as np
+import torch.nn.functional as F
+
+from PIL import Image
+from tqdm import tqdm
+from omegaconf import OmegaConf
 
 from utils import draw_point_marker, mask_painter, images_to_mp4, DAVIS_PALETTE, jpg_folder_to_mp4, is_super_long_or_wide, keep_largest_component, is_skinny_mask, bbox_from_mask, gpu_profile, resize_mask_with_unique_label
 
@@ -38,7 +45,7 @@ else:
 print(f"using device: {device}")
 if device.type == "cuda":
     # use bfloat16 for the entire notebook
-    torch.autocast("cuda", dtype=torch.bfloat16).__enter__()
+    # torch.autocast("cuda", dtype=torch.bfloat16).__enter__()
     # turn on tfloat32 for Ampere GPUs (https://pytorch.org/docs/stable/notes/cuda.html#tensorfloat-32-tf32-on-ampere-devices)
     if torch.cuda.get_device_properties(0).major >= 8:
         torch.backends.cuda.matmul.allow_tf32 = True
@@ -49,16 +56,6 @@ elif device.type == "mps":
         "give numerically different outputs and sometimes degraded performance on MPS. "
         "See e.g. https://github.com/pytorch/pytorch/issues/84936 for a discussion."
     )
-
-
-import uuid
-from datetime import datetime
-
-def gen_id():
-    t = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # 到毫秒
-    u = uuid.uuid4().hex[:8]  # 取 8 位即可
-    return f"{t}_{u}"
-
 
 # ===============================
 # Global runtime objects
@@ -491,7 +488,6 @@ def on_4d_generation(video_path: str):
     For now, just log and return None.
     """
     print("[DEBUG] 4D Generation button clicked.")
-    # TODO: implement 4D body generation, write to a video and return its path
 
     IMAGE_PATH = os.path.join(OUTPUT_DIR, 'images') # for sam3-3d-body
     MASKS_PATH = os.path.join(OUTPUT_DIR, 'masks')  # for sam3-3d-body
@@ -523,6 +519,8 @@ def on_4d_generation(video_path: str):
     for obj_id in RUNTIME['out_obj_ids']:
         os.makedirs(f"{OUTPUT_DIR}/mesh_4d_individual/{obj_id}", exist_ok=True)
         os.makedirs(f"{OUTPUT_DIR}/rendered_frames_individual/{obj_id}", exist_ok=True)
+        if RUNTIME['smpl_export']:
+            os.makedirs(f"{OUTPUT_DIR}/smpl_individual/{obj_id}", exist_ok=True)
 
     batch_size = RUNTIME['batch_size']
     n = len(images_list)
@@ -585,11 +583,10 @@ def on_4d_generation(video_path: str):
                 # compute iou
                 masks = [(np.array(Image.open(bm).convert('P'))==obj_id).astype('uint8') for bm in batch_masks]
                 ious = []
-                # masks = [(np.array(Image.open(bm).convert('P'))==obj_id).astype('uint8') for bm in batch_masks]
                 masks_margin_shrink = [bm.copy() for bm in masks]
                 mask_H, mask_W = masks_margin_shrink[0].shape
                 for bi, (a, b) in enumerate(zip(masks, pred_amodal_masks)):
-                    # # mute objects near margin
+                    # mute objects near margin
                     zero_mask_cp = np.zeros_like(masks_margin_shrink[bi])
                     zero_mask_cp[masks_margin_shrink[bi]==1] = 255
                     mask_binary_cp = zero_mask_cp.astype(np.uint8)
@@ -669,10 +666,7 @@ def on_4d_generation(video_path: str):
                 modal_pixels_current = modal_pixels_current[:, start:end]
                 pred_amodal_masks_current = pred_amodal_masks_dict[obj_id][start:end]
                 modal_mask_union = (modal_pixels_current[0, :, 0, :, :].cpu().numpy() > 0).astype('uint8')
-                try:
-                    pred_amodal_masks_current = np.logical_or(pred_amodal_masks_current, modal_mask_union).astype('uint8')
-                except:
-                    aaa = 1
+                pred_amodal_masks_current = np.logical_or(pred_amodal_masks_current, modal_mask_union).astype('uint8')
                 pred_amodal_masks_tensor = torch.from_numpy(np.where(pred_amodal_masks_current == 0, -1, 1)).float().unsqueeze(0).unsqueeze(
                     2).repeat(1, 1, 3, 1, 1)
 
@@ -740,6 +734,14 @@ def on_4d_generation(video_path: str):
                 image_path=image_path,
                 id_current=id_current,
             )
+            # convert mhr parameters to smpl (and save)
+            if not RUNTIME['smpl_export']:
+                continue
+            
+            for pid, mask_output_ind in mask_output:
+                # id_current[pid]
+                mhr2smpl(mask_output_ind)
+
 
     out_4d_path = os.path.join(OUTPUT_DIR, f"4d_{time.time():.0f}.mp4")
     jpg_folder_to_mp4(f"{OUTPUT_DIR}/rendered_frames", out_4d_path, fps=RUNTIME['video_fps'])
