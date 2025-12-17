@@ -156,7 +156,7 @@ class offline_app:
         vis_frame_stride = 1
         out_h = self.RUNTIME['inference_state']['video_height']
         out_w = self.RUNTIME['inference_state']['video_width']
-        img_to_video = []
+        # img_to_video = []
 
         IMAGE_PATH = os.path.join(self.OUTPUT_DIR, 'images') # for sam3-3d-body
         MASKS_PATH = os.path.join(self.OUTPUT_DIR, 'masks')  # for sam3-3d-body
@@ -179,9 +179,9 @@ class offline_app:
             msk = np.zeros_like(img[:, :, 0])
             for out_obj_id, out_mask in video_segments[out_frame_idx].items():
                 mask = (out_mask[0] > 0).astype(np.uint8) * 255
-                img = mask_painter(img, mask, mask_color=4 + out_obj_id)
+                # img = mask_painter(img, mask, mask_color=4 + out_obj_id)
                 msk[mask == 255] = out_obj_id
-            img_to_video.append(img)
+            # img_to_video.append(img)
 
             msk_pil = Image.fromarray(msk).convert('P')
             msk_pil.putpalette(DAVIS_PALETTE)
@@ -234,8 +234,6 @@ class offline_app:
         for obj_id in self.RUNTIME['out_obj_ids']:
             os.makedirs(f"{self.OUTPUT_DIR}/mesh_4d_individual/{obj_id}", exist_ok=True)
             os.makedirs(f"{self.OUTPUT_DIR}/rendered_frames_individual/{obj_id}", exist_ok=True)
-            if self.RUNTIME['smpl_export']:
-                os.makedirs(f"{self.OUTPUT_DIR}/smpl_individual/{obj_id}", exist_ok=True)
 
         batch_size = self.RUNTIME['batch_size']
         n = len(images_list)
@@ -443,21 +441,22 @@ class offline_app:
                     f"{self.OUTPUT_DIR}/rendered_frames/{os.path.basename(image_path)[:-4]}.jpg",
                     rend_img.astype(np.uint8),
                 )
-                # save rendered frames for individual person
-                rend_img_list = visualize_sample(img, mask_output, self.sam3_3d_body_model.faces, id_current)
-                for ri, rend_img in enumerate(rend_img_list):
-                    cv2.imwrite(
-                        f"{self.OUTPUT_DIR}/rendered_frames_individual/{ri+1}/{os.path.basename(image_path)[:-4]}_{ri+1}.jpg",
-                        rend_img.astype(np.uint8),
-                    )
-                # save mesh for individual person
-                save_mesh_results(
-                    outputs=mask_output, 
-                    faces=self.sam3_3d_body_model.faces, 
-                    save_dir=f"{self.OUTPUT_DIR}/mesh_4d_individual",
-                    image_path=image_path,
-                    id_current=id_current,
-                )
+
+                # # save rendered frames for individual person
+                # rend_img_list = visualize_sample(img, mask_output, self.sam3_3d_body_model.faces, id_current)
+                # for ri, rend_img in enumerate(rend_img_list):
+                #     cv2.imwrite(
+                #         f"{self.OUTPUT_DIR}/rendered_frames_individual/{ri+1}/{os.path.basename(image_path)[:-4]}_{ri+1}.jpg",
+                #         rend_img.astype(np.uint8),
+                #     )
+                # # save mesh for individual person
+                # save_mesh_results(
+                #     outputs=mask_output, 
+                #     faces=self.sam3_3d_body_model.faces, 
+                #     save_dir=f"{self.OUTPUT_DIR}/mesh_4d_individual",
+                #     image_path=image_path,
+                #     id_current=id_current,
+                # )
                 
                 np.savez_compressed(f"{self.OUTPUT_DIR}/mhr_params/{os.path.basename(image_path)[:-4]}_data.npz", data=mask_output)
                 np.savez_compressed(f"{self.OUTPUT_DIR}/mhr_params/{os.path.basename(image_path)[:-4]}_id.npz", data=id_current)

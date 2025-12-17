@@ -3,6 +3,7 @@ import numpy as np
 import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(current_dir))
+sys.path.append(os.path.join(os.path.dirname(current_dir), 'mhr_smpl_conversion'))
 from mhr_smpl_conversion.mhr2smpl import mhr2smpl
 
 from typing import Dict
@@ -44,13 +45,6 @@ def dict_numpy_to_torch(
 
 
 if __name__ == "__main__":
-    root_path = "/root/autodl-tmp/outputs/downtown_arguing_00/mhr_params"
-    mhr_file_list = glob.glob(os.path.join(root_path, "*data.npz"))
-    mhr_file_list.sort()
-    mhr_list = []
-    for mhr_file in mhr_file_list:
-        mhr_list.append(np.load(mhr_file, allow_pickle=True)["data"].tolist())
-    
-    xxx = dict_numpy_to_torch(mhr_list[0][0])
-    mhr2smpl(xxx)
-    a = 1
+    mhr_vertices = np.load("data.npz")["arr"]
+    mhr_vertices = np.expand_dims(mhr_vertices, axis=0)
+    mhr2smpl(mhr_vertices, 1)

@@ -354,7 +354,7 @@ class Renderer:
         try:
             mesh = pyrender.Mesh.from_trimesh(mesh, smooth=True)
         except:
-            a = 1
+            pass
         # Build pyrender scene
         scene = pyrender.Scene(
             bg_color=[*scene_bg_color, 0.0],
