@@ -10,7 +10,7 @@ This project performs training-free biomechanics analysis from monocular video.
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      <img src="[https://github.com/user-attachments/assets/29cc26f8-6bcf-4aee-802a-7fa4bcdadfde" width="100%" />
+      <img src="https://github.com/user-attachments/assets/85e59fb5-3e18-4963-96b7-f59c6b42601b" width="100%" />
       <br />Cam 1
     </td>
     <td align="center">
@@ -19,6 +19,8 @@ This project performs training-free biomechanics analysis from monocular video.
     </td>
   </tr>
 </table>
+
+
 
 ## Quick demo
 Monocular video results adapted to the opencap backend:
