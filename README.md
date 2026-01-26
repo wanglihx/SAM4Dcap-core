@@ -126,7 +126,7 @@ bash TVB/SAM4Dcap/opencap.sh
   </tr>
 </table>
 
-- Custom keypoints:
+- Tool for custom keypoints:
 ```bash
 bash TVB/SAM4Dcap/select.sh
 ```
