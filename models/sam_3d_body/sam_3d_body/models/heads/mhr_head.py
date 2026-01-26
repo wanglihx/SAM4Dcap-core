@@ -224,9 +224,17 @@ class MHRHead(nn.Module):
             # Zero out non-hand parameters
             model_params[:, self.nonhand_param_idxs] = 0
 
-        curr_skinned_verts, curr_skel_state = self.mhr(
-            shape_params, model_params, expr_params
-        )
+        # 强制转换为 float32，避免 bfloat16 稀疏矩阵不支持的问题
+        shape_params = shape_params.float()
+        model_params = model_params.float()
+        if expr_params is not None:
+            expr_params = expr_params.float()
+
+        # 禁用 autocast，强制使用 float32
+        with torch.cuda.amp.autocast(enabled=False):
+            curr_skinned_verts, curr_skel_state = self.mhr(
+                shape_params, model_params, expr_params
+            )
         curr_joint_coords, curr_joint_quats, _ = torch.split(
             curr_skel_state, [3, 4, 1], dim=2
         )

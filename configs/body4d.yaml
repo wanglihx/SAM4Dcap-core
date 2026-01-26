@@ -8,7 +8,7 @@
 
 paths:
   # Set your global checkpoint root directory here
-  ckpt_root: "path to global checkpoint root"
+  ckpt_root: "/root/autodl-tmp"
 
 sam3:
   # download: https://huggingface.co/facebook/sam3
@@ -35,7 +35,7 @@ completion:
   model_path_mask: ${paths.ckpt_root}/diffusion-vas-amodal-segmentation
   model_path_rgb:  ${paths.ckpt_root}/diffusion-vas-content-completion
   # download (depth anything v2): https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true
-  model_path_depth: ${paths.ckpt_root}/depth_anything_v2_vitl.pth
+  model_path_depth: ${paths.ckpt_root}/Depth-Anything-V2-Large/depth_anything_v2_vitl.pth
 
   depth_encoder: vitl
   max_occ_len: 25
