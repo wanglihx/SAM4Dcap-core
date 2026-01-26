@@ -10,12 +10,12 @@ This project performs training-free biomechanics analysis from monocular video.
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/5310c0be-dbed-4304-bd30-52c63c1807cd" width="100%" />
-      <br />图 1 说明
+      <img src="[https://github.com/user-attachments/assets/29cc26f8-6bcf-4aee-802a-7fa4bcdadfde" width="100%" />
+      <br />Cam 1
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/25ba24d9-c04c-4b7c-9e6e-71e06c910603" width="100%" />
-      <br />图 2 说明
+      <br />Visualisation
     </td>
   </tr>
 </table>
