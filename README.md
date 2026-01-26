@@ -8,6 +8,7 @@ This project performs training-free biomechanics analysis from monocular video.
 
 
 ![2026-01-26T12_46_39 279Z-827938](https://github.com/user-attachments/assets/5310c0be-dbed-4304-bd30-52c63c1807cd) 
+
 ![2026-01-26T12_46_39 279Z-827938](https://github.com/user-attachments/assets/25ba24d9-c04c-4b7c-9e6e-71e06c910603)
 
 ## Quick demo
