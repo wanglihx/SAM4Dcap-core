@@ -89,7 +89,7 @@ TVB/Readme_modified/check_again.txt
 ```
 - Adapt AddBiomechanic with 105 keypoints (Monocular Video):
 ```bash
-bash pipeline1.sh
+bash TVB/SAM4Dcap/pipeline1.sh
 ```
 
 <table style="width: 100%;">
@@ -107,11 +107,11 @@ bash pipeline1.sh
 
 - Adapt opencap with 43 keypoints (Monocular Video):
 ```bash
-bash pipeline2.sh
+bash TVB/SAM4Dcap/pipeline2.sh
 ```
 - opencap reproduction (Binocular Video):
 ```bash
-bash opencap.sh
+bash TVB/SAM4Dcap/opencap.sh
 ```
 <table style="width: 100%;">
   <tr>
@@ -128,7 +128,7 @@ bash opencap.sh
 
 - Custom keypoints:
 ```bash
-bash select.sh
+bash TVB/SAM4Dcap/select.sh
 ```
 
 https://github.com/user-attachments/assets/853ba90e-bb06-4caa-b2e2-ef391232b23f
@@ -137,7 +137,7 @@ https://github.com/user-attachments/assets/853ba90e-bb06-4caa-b2e2-ef391232b23f
 - Align:
 
 ```bash
-cd /root/autodl-tmp/SAM4Dcap/align/webviz_compare
+cd TVB/SAM4Dcap/align/webviz_compare
 python -m http.server 8092 --bind 127.0.0.1
 ```
 
