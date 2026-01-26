@@ -80,6 +80,7 @@ bash opencap.sh
 ```bash
 bash select.sh
 ```
+- 对齐效果:
 
 ## Quick setup
 Because of GitHub repository size limits, we will upload the complete project code and environments to a cloud drive. Contact wangli1@stu.scu.edu.cn to reproduce the project more easily.
@@ -95,4 +96,5 @@ Thanks to
 - https://github.com/opensim-org/opensim-core
 - https://github.com/MarilynKeller/SMPL2AddBiomechanics
 - https://github.com/keenon/AddBiomechanic
+
 
