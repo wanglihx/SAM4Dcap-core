@@ -62,10 +62,10 @@ def smpl_model_fwd(smpl_model, smpl_data, device='cpu'):
    
     
 def SMPL(gender, num_betas=10, model_type='smpl'): 
-    smpl= smplx.create(
-            model_path=cg.smpl_folder,
-            gender=gender,
-            num_betas=num_betas,
-            model_type=model_type)
+    smpl = smplx.SMPL(
+        model_path="/root/autodl-tmp/MHRtoSMPL/SMPL_NEUTRAL_chumpy_free.pkl",
+        gender=gender,
+        num_betas=num_betas,
+    )
     return smpl
     

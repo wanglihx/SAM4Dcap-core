@@ -7,7 +7,6 @@ import pickle
 import tqdm
 import yaml
 
-from smpl2ab.markers.smpl2osim import Smpl2osim
 from smpl2ab.markers.smpl_markers import SmplMarker
 from smpl2ab.measurements.measurements import BodyMeasurements
 from smpl2ab.utils.smpl_utils import SMPL, load_smpl_seq, smpl_model_fwd
@@ -89,6 +88,7 @@ def create_data_folder(subject_name, subject_trials, output_folder, osim_model_p
         
   
     if use_osso:
+        from smpl2ab.markers.smpl2osim import Smpl2osim  # Lazy import to avoid optional deps when not needed
         # Generate an BSM model with the corresponding markers
         osso_folder = os.path.join(subject_folder, 'osso')
         osso_mesh_path = os.path.join(osso_folder, 'skel_lying.ply')
