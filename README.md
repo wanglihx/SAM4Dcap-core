@@ -62,8 +62,10 @@ Full environment files will be uploaded to a cloud drive later.
 - https://github.com/MarilynKeller/SMPL2AddBiomechanics
 - https://github.com/keenon/AddBiomechanic
 
-- Except for OpenSim (which remains unchanged), all repositories contain modified or new code. For detailed documentation, please refer to: TVB/Readme_modified/README.md.
-
+- Except for OpenSim (which remains unchanged), all repositories contain modified or new code. For detailed documentation, please refer to:
+```bash
+TVB/Readme_modified/README.md
+```
 - The modified versions have been uploaded to the branches of this repository. For Addbiomechanics, please download the file from [xxx] and extract the file to the
 
 ```bash
@@ -82,8 +84,9 @@ TVB/Readme_modified/checkpoints.txt
 ## One-click run + visualization
 
 Double-check paths before running:
+```bash
 TVB/Readme_modified/check_again.txt
-
+```
 - Adapt AddBiomechanic with 105 keypoints (Monocular Video):
 ```bash
 bash pipeline1.sh
