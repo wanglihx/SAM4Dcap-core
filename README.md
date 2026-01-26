@@ -123,7 +123,20 @@ bash opencap.sh
 ```bash
 bash select.sh
 ```
+
+https://github.com/user-attachments/assets/853ba90e-bb06-4caa-b2e2-ef391232b23f
+
+
 - 对齐效果:
+
+```bash
+cd /root/autodl-tmp/SAM4Dcap/align/webviz_compare
+python -m http.server 8092 --bind 127.0.0.1
+```
+
+
+https://github.com/user-attachments/assets/f84332d3-11d3-4629-8439-1e3975c51caa
+
 
 ## Quick setup
 Because of GitHub repository size limits, we will upload the complete project code and environments to a cloud drive. Contact wangli1@stu.scu.edu.cn to reproduce the project more easily.
