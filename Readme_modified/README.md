@@ -1,6 +1,6 @@
 # Uncommitted Changes Summary
 
-Summary of current uncommitted/untracked changes under `/root/TVB`, gathered via `git status` and `git diff`. 中文版见 `README_zh.md`.
+Summary of current uncommitted/untracked changes under `/root/TVB`, gathered via `git status` and `git diff`.
 
 ## AddBiomechanics
 | File/Path | Change Type | Summary | Status |
