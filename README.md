@@ -81,8 +81,13 @@ We will further optimize pipeline1 and pipeline2 to achieve more accurate traini
 # Acknowledgements
 Thanks to
 https://github.com/gaomingqi/sam-body4d
+
 https://github.com/facebookresearch/MHR
+
 https://github.com/opencap-org/opencap-core
+
 https://github.com/opensim-org/opensim-core
+
 https://github.com/MarilynKeller/SMPL2AddBiomechanics
+
 https://github.com/keenon/AddBiomechanic
