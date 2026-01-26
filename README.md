@@ -92,7 +92,7 @@ bash pipeline1.sh
       <br />local: http://localhost:3088/
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" />
+      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" width="100%" />
       <br />online: https://app.addbiomechanics.org/
     </td>
   </tr>
@@ -105,6 +105,21 @@ bash pipeline2.sh
 - opencap reproduction (Binocular Video):
 ```bash
 bash opencap.sh
+
+<table style="width: 100%;">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/25ba24d9-c04c-4b7c-9e6e-71e06c910603" width="100%" />
+      <br />Monocular Video: http://127.0.0.1:8093/webviz/
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/72f2379e-6c42-4784-8d9f-279a0c9fb662" width="100%"/>
+      <br />Binocular Video http://127.0.0.1:8090/web/webviz/
+    </td>
+  </tr>
+</table>
+
+
 ```
 - Custom keypoints:
 ```bash
