@@ -20,9 +20,13 @@ RTX PRO 6000 (96GB)
 
 ## Environment
 Environment paths and source projects
+
 TVB/envs/body4d: https://github.com/gaomingqi/sam-body4d
+
 TVB/envs/MHRtoSMPL: https://github.com/facebookresearch/MHR
+
 TVB/envs/opencap: https://github.com/opencap-org/opencap-core
+
 TVB/envs/opensim: https://github.com/opensim-org/opensim-core
 
 We compiled with CUDA for the GPU architecture used in our experiments (sm_120) using these versions:
@@ -36,11 +40,17 @@ Full environment files will be uploaded to a cloud drive later.
 ## Codebases and models
 
 ### We integrated six repositories
+
 https://github.com/gaomingqi/sam-body4d
+
 https://github.com/facebookresearch/MHR
+
 https://github.com/opencap-org/opencap-core
+
 https://github.com/opensim-org/opensim-core
+
 https://github.com/MarilynKeller/SMPL2AddBiomechanics
+
 https://github.com/keenon/AddBiomechanic
 
 Except for opensim （没修改）, all repositories have modified or new code. For details see:
@@ -80,6 +90,7 @@ We will further optimize pipeline1 and pipeline2 to achieve more accurate traini
 
 # Acknowledgements
 Thanks to
+
 https://github.com/gaomingqi/sam-body4d
 
 https://github.com/facebookresearch/MHR
