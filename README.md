@@ -80,15 +80,29 @@ TVB/Readme_modified/checkpoints.txt
 Double-check paths before running:
 TVB/Readme_modified/check_again.txt
 
-- Adapt AddBiomechanic with 105 keypoints:
+- Adapt AddBiomechanic with 105 keypoints (Monocular Video):
 ```bash
 bash pipeline1.sh
 ```
-- Adapt opencap with 43 keypoints:
+
+<table style="width: 100%;">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/c910cdaf-92db-4c5b-927a-c4ca9115827e" width="100%" />
+      <br />local: http://localhost:3088/
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" />
+      <br />online: https://app.addbiomechanics.org/
+    </td>
+  </tr>
+</table>
+
+- Adapt opencap with 43 keypoints (Monocular Video):
 ```bash
 bash pipeline2.sh
 ```
-- opencap reproduction:
+- opencap reproduction (Binocular Video):
 ```bash
 bash opencap.sh
 ```
