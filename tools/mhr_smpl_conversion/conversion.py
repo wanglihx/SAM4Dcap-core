@@ -459,10 +459,12 @@ class Conversion:
 
         # Handle coordinate system conversion for input
         if direction == "mhr2smpl":
-            # MHR uses centimeters but SMPL uses meters
-            source_vertices = (
-                source_vertices * ConversionConstants.CENTIMETERS_TO_METERS
-            )
+            # NOTE: Our MHR data is already in meters, so no conversion needed
+            # Original code assumed MHR uses centimeters:
+            # source_vertices = (
+            #     source_vertices * ConversionConstants.CENTIMETERS_TO_METERS
+            # )
+            pass
 
         # Process in batches to avoid GPU memory issues
         num_frames = source_vertices.shape[0]

@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from pathlib import Path
+
+_BASE = Path(__file__).resolve().parent
+
 # Part mask files
-HEAD_HAND_MASK_FILE = "./assets/head_hand_mask.npz"
-MHR_FACE_MASK_FILE = "./assets/mhr_face_mask.ply"
+HEAD_HAND_MASK_FILE = str(_BASE / "assets/head_hand_mask.npz")
+MHR_FACE_MASK_FILE = str(_BASE / "assets/mhr_face_mask.ply")
 
 # Subsampled mhr vertices
-SUBSAMPLED_VERTEX_INDICES_FILE = "./assets/subsampled_vertex_indices.npy"
+SUBSAMPLED_VERTEX_INDICES_FILE = str(_BASE / "assets/subsampled_vertex_indices.npy")
 
 # Model template mesh mapping files
-SMPL2MHR_MAPPING_FILE = "./assets/smpl2mhr_mapping.npz"
-SMPLX2MHR_MAPPING_FILE = "./assets/smplx2mhr_mapping.npz"
-MHR2SMPL_MAPPING_FILE = "./assets/mhr2smpl_mapping.npz"
-MHR2SMPLX_MAPPING_FILE = "./assets/mhr2smplx_mapping.npz"
+SMPL2MHR_MAPPING_FILE = str(_BASE / "assets/smpl2mhr_mapping.npz")
+SMPLX2MHR_MAPPING_FILE = str(_BASE / "assets/smplx2mhr_mapping.npz")
+MHR2SMPL_MAPPING_FILE = str(_BASE / "assets/mhr2smpl_mapping.npz")
+MHR2SMPLX_MAPPING_FILE = str(_BASE / "assets/mhr2smplx_mapping.npz")
