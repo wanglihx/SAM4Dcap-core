@@ -96,11 +96,11 @@ bash TVB/SAM4Dcap/pipeline1.sh
   <tr>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/c910cdaf-92db-4c5b-927a-c4ca9115827e" width="100%" />
-      <br />local: http://localhost:3088/
+      <br />local: http: //localhost:3088/
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" width="100%" />
-      <br />online: https://app.addbiomechanics.org/
+      <br />online: https: //app.addbiomechanics.org/
     </td>
   </tr>
 </table>
@@ -121,7 +121,7 @@ bash TVB/SAM4Dcap/opencap.sh
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/72f2379e-6c42-4784-8d9f-279a0c9fb662" width="100%"/>
-      <br />Binocular Video http://127.0.0.1:8090/web/webviz/
+      <br />Binocular Video: http://127.0.0.1:8090/web/webviz/
     </td>
   </tr>
 </table>
