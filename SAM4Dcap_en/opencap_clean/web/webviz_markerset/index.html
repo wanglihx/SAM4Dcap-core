@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OpenCap Visualization (local)</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <div class="row">
+        <div class="group">
+          <label>session</label>
+          <input id="session" value="subject2_Session0" />
+        </div>
+        <div class="group">
+          <label>trial</label>
+          <input id="trial" value="DJ1" />
+        </div>
+        <button id="load">Load</button>
+      </div>
+
+      <div class="row">
+        <button id="play">Play</button>
+        <input id="frame" type="range" min="0" max="0" value="0" />
+        <div class="group small">
+          <label>Speed</label>
+          <input id="speed" type="number" min="0.1" max="4" step="0.1" value="1.0" />
+        </div>
+        <label class="check"><input id="showMesh" type="checkbox" checked />Model</label>
+        <label class="check"><input id="showSkeleton" type="checkbox" checked />Skeleton</label>
+        <div id="info" class="info">Not loaded</div>
+      </div>
+    </header>
+
+    <main class="layout layout-3">
+      <section class="panel">
+        <div id="viewer" class="viewer"></div>
+        <div class="hint">
+          Drag to rotate, scroll to zoom, right-click to pan. This view uses body translation/rotation from VisualizerJsons and can optionally load OpenSim VTP meshes.
+        </div>
+      </section>
+
+      <section class="panel markers">
+        <div class="title">MarkerSet (static overlay)</div>
+        <div class="markers-controls">
+          <div class="row">
+            <label class="check"><input id="showMarkers" type="checkbox" checked />markers</label>
+            <label class="check"><input id="showMarkerLabels" type="checkbox" />Names</label>
+          </div>
+
+          <div class="row">
+            <div class="group grow">
+              <label>marker JSON</label>
+              <input id="markerScene" value="scene_LaiUhlrich2022_scaled.json" />
+            </div>
+            <button id="loadMarkers">Load</button>
+          </div>
+
+          <div class="row">
+            <div class="group grow">
+              <label>Marker size</label>
+              <input id="markerSize" type="range" min="0.005" max="0.06" step="0.001" value="0.02" />
+            </div>
+          </div>
+
+          <input id="markerFilter" class="filter" placeholder="Search (e.g., C7 / ASIS / knee)" />
+        </div>
+
+        <div id="markerList" class="marker-list"></div>
+      </section>
+
+      <section class="panel videos">
+        <div class="title">Synced videos (VisualizerVideos)</div>
+        <div id="videos" class="videos-grid"></div>
+      </section>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

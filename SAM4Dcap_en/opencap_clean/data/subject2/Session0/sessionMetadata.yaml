@@ -1,0 +1,21 @@
+calibrationSettings:
+  overwriteDeployedIntrinsics: false
+  saveSessionIntrinsics: false
+checkerBoard:
+  black2BlackCornersHeight_n: 8
+  black2BlackCornersWidth_n: 11
+  placement: backWall
+  squareSideLength_mm: 60.0
+height_m: 1.96
+iphoneModel:
+  Cam0: iPhone13,3
+  Cam1: iPhone13,3
+  Cam2: iPhone13,3
+  Cam3: iPhone13,3
+  Cam4: iPhone13,3
+markerAugmentationSettings:
+  markerAugmenterModel: LSTM
+mass_kg: 78.2
+openSimModel: LaiUhlrich2022
+sex: m
+subjectID: subject2

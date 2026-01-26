@@ -1,0 +1,1414 @@
+{
+  "meta": {
+    "note": "Base 43-marker compare scene + manual SMPL picks (green).",
+    "base_scene": "/root/TVB/0109work/scene_subject2_static1_frame1_43markers_compare_with_adj.json",
+    "picks": "/root/TVB/0109work/manual_picks_new.json"
+  },
+  "bodies": {
+    "pelvis": {
+      "translation": [
+        1.052,
+        1.117,
+        -0.6018
+      ],
+      "rotation": [
+        -0.0099,
+        0.0087,
+        -0.0571
+      ],
+      "attachedGeometries": [
+        "r_pelvis.vtp",
+        "l_pelvis.vtp",
+        "sacrum.vtp"
+      ],
+      "scaleFactors": [
+        1.1193313375905536,
+        1.1193313375905536,
+        1.1675828265982262
+      ]
+    },
+    "femur_r": {
+      "translation": [
+        0.9849,
+        1.0338,
+        -0.5101
+      ],
+      "rotation": [
+        -0.1159,
+        -0.0275,
+        -0.0518
+      ],
+      "attachedGeometries": [
+        "r_femur.vtp"
+      ],
+      "scaleFactors": [
+        1.1982278221143683,
+        1.1982278221143683,
+        1.1982278221143683
+      ]
+    },
+    "tibia_r": {
+      "translation": [
+        0.9647,
+        0.551,
+        -0.4547
+      ],
+      "rotation": [
+        -0.1154,
+        -0.0247,
+        -0.0612
+      ],
+      "attachedGeometries": [
+        "r_tibia.vtp",
+        "r_fibula.vtp"
+      ],
+      "scaleFactors": [
+        1.2764883664883664,
+        1.2764883664883664,
+        1.2764883664883664
+      ]
+    },
+    "patella_r": {
+      "translation": [
+        1.0119,
+        0.5334,
+        -0.4512
+      ],
+      "rotation": [
+        -0.1159,
+        -0.0275,
+        -0.0507
+      ],
+      "attachedGeometries": [
+        "r_patella.vtp"
+      ],
+      "scaleFactors": [
+        1.1982278221143683,
+        1.1982278221143683,
+        1.1982278221143683
+      ]
+    },
+    "talus_r": {
+      "translation": [
+        0.9208,
+        0.0454,
+        -0.3972
+      ],
+      "rotation": [
+        -0.1249,
+        -0.0398,
+        0.0243
+      ],
+      "attachedGeometries": [
+        "r_talus.vtp"
+      ],
+      "scaleFactors": [
+        0.9957831034362109,
+        0.9957831034362109,
+        0.9957831034362109
+      ]
+    },
+    "calcn_r": {
+      "translation": [
+        0.873,
+        0.0035,
+        -0.3859
+      ],
+      "rotation": [
+        -0.1057,
+        -0.0243,
+        0.0219
+      ],
+      "attachedGeometries": [
+        "r_foot.vtp"
+      ],
+      "scaleFactors": [
+        0.9957831034362109,
+        0.9957831034362109,
+        0.9957831034362109
+      ]
+    },
+    "toes_r": {
+      "translation": [
+        1.0509,
+        0.006,
+        -0.3808
+      ],
+      "rotation": [
+        -0.1547,
+        -0.027,
+        0.0895
+      ],
+      "attachedGeometries": [
+        "r_bofoot.vtp"
+      ],
+      "scaleFactors": [
+        0.9957831034362109,
+        0.9957831034362109,
+        0.9957831034362109
+      ]
+    },
+    "femur_l": {
+      "translation": [
+        0.9833,
+        1.032,
+        -0.6905
+      ],
+      "rotation": [
+        0.1318,
+        0.1416,
+        -0.0561
+      ],
+      "attachedGeometries": [
+        "l_femur.vtp"
+      ],
+      "scaleFactors": [
+        1.1942323624980584,
+        1.1942323624980584,
+        1.1942323624980584
+      ]
+    },
+    "tibia_l": {
+      "translation": [
+        0.9614,
+        0.5515,
+        -0.7508
+      ],
+      "rotation": [
+        0.1313,
+        0.1391,
+        -0.0648
+      ],
+      "attachedGeometries": [
+        "l_tibia.vtp",
+        "l_fibula.vtp"
+      ],
+      "scaleFactors": [
+        1.2690818161532036,
+        1.2690818161532036,
+        1.2690818161532036
+      ]
+    },
+    "patella_l": {
+      "translation": [
+        1.0079,
+        0.5345,
+        -0.76
+      ],
+      "rotation": [
+        0.1318,
+        0.1416,
+        -0.055
+      ],
+      "attachedGeometries": [
+        "l_patella.vtp"
+      ],
+      "scaleFactors": [
+        1.1942323624980584,
+        1.1942323624980584,
+        1.1942323624980584
+      ]
+    },
+    "talus_l": {
+      "translation": [
+        0.9163,
+        0.0493,
+        -0.8108
+      ],
+      "rotation": [
+        0.141,
+        0.1541,
+        0.0195
+      ],
+      "attachedGeometries": [
+        "l_talus.vtp"
+      ],
+      "scaleFactors": [
+        0.9957831034362109,
+        0.9957831034362109,
+        0.9957831034362109
+      ]
+    },
+    "calcn_l": {
+      "translation": [
+        0.8679,
+        0.007,
+        -0.8173
+      ],
+      "rotation": [
+        0.0923,
+        0.1156,
+        0.0186
+      ],
+      "attachedGeometries": [
+        "l_foot.vtp"
+      ],
+      "scaleFactors": [
+        0.9957831034362109,
+        0.9957831034362109,
+        0.9957831034362109
+      ]
+    },
+    "toes_l": {
+      "translation": [
+        1.0446,
+        0.0103,
+        -0.8387
+      ],
+      "rotation": [
+        0.1417,
+        0.118,
+        0.0816
+      ],
+      "attachedGeometries": [
+        "l_bofoot.vtp"
+      ],
+      "scaleFactors": [
+        0.9957831034362109,
+        0.9957831034362109,
+        0.9957831034362109
+      ]
+    },
+    "torso": {
+      "translation": [
+        0.9447,
+        1.2145,
+        -0.6018
+      ],
+      "rotation": [
+        -0.0074,
+        0.0088,
+        -0.0646
+      ],
+      "attachedGeometries": [
+        "hat_spine.vtp",
+        "hat_jaw.vtp",
+        "hat_skull.vtp",
+        "hat_ribs_scap.vtp"
+      ],
+      "scaleFactors": [
+        1.041255136524696,
+        1.041255136524696,
+        1.0471226985771944
+      ]
+    },
+    "humerus_r": {
+      "translation": [
+        0.9745,
+        1.6016,
+        -0.4269
+      ],
+      "rotation": [
+        -0.2306,
+        0.4297,
+        -0.1506
+      ],
+      "attachedGeometries": [
+        "humerus_rv.vtp"
+      ],
+      "scaleFactors": [
+        1.1094719981315206,
+        1.1094719981315206,
+        1.1094719981315206
+      ]
+    },
+    "ulna_r": {
+      "translation": [
+        0.9399,
+        1.2947,
+        -0.3506
+      ],
+      "rotation": [
+        -0.1513,
+        0.4359,
+        0.1274
+      ],
+      "attachedGeometries": [
+        "ulna_rv.vtp"
+      ],
+      "scaleFactors": [
+        1.238280347061679,
+        1.238280347061679,
+        1.238280347061679
+      ]
+    },
+    "radius_r": {
+      "translation": [
+        0.9479,
+        1.2827,
+        -0.3165
+      ],
+      "rotation": [
+        -0.3575,
+        1.2995,
+        0.3026
+      ],
+      "attachedGeometries": [
+        "radius_rv.vtp"
+      ],
+      "scaleFactors": [
+        1.238280347061679,
+        1.238280347061679,
+        1.238280347061679
+      ]
+    },
+    "hand_r": {
+      "translation": [
+        0.9846,
+        0.9942,
+        -0.2827
+      ],
+      "rotation": [
+        -0.3575,
+        1.2995,
+        0.3026
+      ],
+      "attachedGeometries": [
+        "pisiform_rvs.vtp",
+        "lunate_rvs.vtp",
+        "scaphoid_rvs.vtp",
+        "triquetrum_rvs.vtp",
+        "hamate_rvs.vtp",
+        "capitate_rvs.vtp",
+        "trapezoid_rvs.vtp",
+        "trapezium_rvs.vtp",
+        "metacarpal2_rvs.vtp",
+        "index_proximal_rvs.vtp",
+        "index_medial_rvs.vtp",
+        "index_distal_rvs.vtp",
+        "metacarpal3_rvs.vtp",
+        "middle_proximal_rvs.vtp",
+        "middle_medial_rvs.vtp",
+        "middle_distal_rvs.vtp",
+        "metacarpal4_rvs.vtp",
+        "ring_proximal_rvs.vtp",
+        "ring_medial_rvs.vtp",
+        "ring_distal_rvs.vtp",
+        "metacarpal5_rvs.vtp",
+        "little_proximal_rvs.vtp",
+        "little_medial_rvs.vtp",
+        "little_distal_rvs.vtp",
+        "metacarpal1_rvs.vtp",
+        "thumb_proximal_rvs.vtp",
+        "thumb_distal_rvs.vtp"
+      ],
+      "scaleFactors": [
+        1.0525382950024271,
+        1.0525382950024271,
+        1.0525382950024271
+      ]
+    },
+    "humerus_l": {
+      "translation": [
+        0.9714,
+        1.599,
+        -0.7829
+      ],
+      "rotation": [
+        0.2085,
+        -0.3043,
+        -0.1714
+      ],
+      "attachedGeometries": [
+        "humerus_lv.vtp"
+      ],
+      "scaleFactors": [
+        1.1094719981315206,
+        1.1094719981315206,
+        1.1094719981315206
+      ]
+    },
+    "ulna_l": {
+      "translation": [
+        0.9302,
+        1.2907,
+        -0.8499
+      ],
+      "rotation": [
+        0.1103,
+        -0.3151,
+        0.2053
+      ],
+      "attachedGeometries": [
+        "ulna_lv.vtp"
+      ],
+      "scaleFactors": [
+        1.238280347061679,
+        1.238280347061679,
+        1.238280347061679
+      ]
+    },
+    "radius_l": {
+      "translation": [
+        0.9356,
+        1.2769,
+        -0.8838
+      ],
+      "rotation": [
+        0.3456,
+        -1.0954,
+        0.3722
+      ],
+      "attachedGeometries": [
+        "radius_lv.vtp"
+      ],
+      "scaleFactors": [
+        1.238280347061679,
+        1.238280347061679,
+        1.238280347061679
+      ]
+    },
+    "hand_l": {
+      "translation": [
+        0.9946,
+        0.9909,
+        -0.9042
+      ],
+      "rotation": [
+        0.3456,
+        -1.0954,
+        0.3722
+      ],
+      "attachedGeometries": [
+        "pisiform_lvs.vtp",
+        "lunate_lvs.vtp",
+        "scaphoid_lvs.vtp",
+        "triquetrum_lvs.vtp",
+        "hamate_lvs.vtp",
+        "capitate_lvs.vtp",
+        "trapezoid_lvs.vtp",
+        "trapezium_lvs.vtp",
+        "metacarpal2_lvs.vtp",
+        "index_proximal_lvs.vtp",
+        "index_medial_lvs.vtp",
+        "index_distal_lvs.vtp",
+        "metacarpal3_lvs.vtp",
+        "middle_proximal_lvs.vtp",
+        "middle_medial_lvs.vtp",
+        "middle_distal_lvs.vtp",
+        "metacarpal4_lvs.vtp",
+        "ring_proximal_lvs.vtp",
+        "ring_medial_lvs.vtp",
+        "ring_distal_lvs.vtp",
+        "metacarpal5_lvs.vtp",
+        "little_proximal_lvs.vtp",
+        "little_medial_lvs.vtp",
+        "little_distal_lvs.vtp",
+        "metacarpal1_lvs.vtp",
+        "thumb_proximal_lvs.vtp",
+        "thumb_distal_lvs.vtp"
+      ],
+      "scaleFactors": [
+        1.0525382950024271,
+        1.0525382950024271,
+        1.0525382950024271
+      ]
+    }
+  },
+  "edges": [
+    [
+      "pelvis",
+      "femur_r"
+    ],
+    [
+      "femur_r",
+      "tibia_r"
+    ],
+    [
+      "femur_r",
+      "patella_r"
+    ],
+    [
+      "tibia_r",
+      "talus_r"
+    ],
+    [
+      "talus_r",
+      "calcn_r"
+    ],
+    [
+      "calcn_r",
+      "toes_r"
+    ],
+    [
+      "pelvis",
+      "femur_l"
+    ],
+    [
+      "femur_l",
+      "tibia_l"
+    ],
+    [
+      "femur_l",
+      "patella_l"
+    ],
+    [
+      "tibia_l",
+      "talus_l"
+    ],
+    [
+      "talus_l",
+      "calcn_l"
+    ],
+    [
+      "calcn_l",
+      "toes_l"
+    ],
+    [
+      "pelvis",
+      "torso"
+    ],
+    [
+      "torso",
+      "humerus_r"
+    ],
+    [
+      "humerus_r",
+      "ulna_r"
+    ],
+    [
+      "ulna_r",
+      "radius_r"
+    ],
+    [
+      "radius_r",
+      "hand_r"
+    ],
+    [
+      "torso",
+      "humerus_l"
+    ],
+    [
+      "humerus_l",
+      "ulna_l"
+    ],
+    [
+      "ulna_l",
+      "radius_l"
+    ],
+    [
+      "radius_l",
+      "hand_l"
+    ]
+  ],
+  "markers": [
+    {
+      "name": "C7_study_opencap",
+      "position": [
+        0.8942491,
+        1.6429238,
+        -0.6022893
+      ]
+    },
+    {
+      "name": "C7_study_smpl",
+      "position": [
+        0.8995179532194791,
+        1.6718621095280177,
+        -0.5967320477571733
+      ]
+    },
+    {
+      "name": "r_shoulder_study_opencap",
+      "position": [
+        0.9949022,
+        1.6306378,
+        -0.4532588
+      ]
+    },
+    {
+      "name": "r_shoulder_study_smpl",
+      "position": [
+        0.9991713512510872,
+        1.6564301306136868,
+        -0.4217555885085506
+      ]
+    },
+    {
+      "name": "L_shoulder_study_opencap",
+      "position": [
+        0.9743506,
+        1.6301366,
+        -0.7700496
+      ]
+    },
+    {
+      "name": "L_shoulder_study_smpl",
+      "position": [
+        0.9687677463787654,
+        1.6723389648344043,
+        -0.7810630335829472
+      ]
+    },
+    {
+      "name": "r.ASIS_study_opencap",
+      "position": [
+        1.0807366,
+        1.1320996,
+        -0.4691254
+      ]
+    },
+    {
+      "name": "r.ASIS_study_smpl",
+      "position": [
+        1.0599459067434405,
+        1.1377941321132474,
+        -0.48566342232208276
+      ]
+    },
+    {
+      "name": "L.ASIS_study_opencap",
+      "position": [
+        1.0690566,
+        1.1220588,
+        -0.742782
+      ]
+    },
+    {
+      "name": "L.ASIS_study_smpl",
+      "position": [
+        1.0471775808303159,
+        1.137777292754691,
+        -0.7363182110792572
+      ]
+    },
+    {
+      "name": "r.PSIS_study_opencap",
+      "position": [
+        0.8758464,
+        1.1472792,
+        -0.5432401
+      ]
+    },
+    {
+      "name": "r.PSIS_study_smpl",
+      "position": [
+        0.850279417066851,
+        1.1528273927624224,
+        -0.565353999165098
+      ]
+    },
+    {
+      "name": "L.PSIS_study_opencap",
+      "position": [
+        0.8703716,
+        1.1429937,
+        -0.6493407
+      ]
+    },
+    {
+      "name": "L.PSIS_study_smpl",
+      "position": [
+        0.8414094681644505,
+        1.1513913046187256,
+        -0.6333442564695996
+      ]
+    },
+    {
+      "name": "r_knee_study_opencap",
+      "position": [
+        0.9644067,
+        0.5762541,
+        -0.3870864
+      ]
+    },
+    {
+      "name": "r_knee_study_smpl",
+      "position": [
+        0.9644761176506442,
+        0.5856717537306814,
+        -0.3842840228678277
+      ]
+    },
+    {
+      "name": "L_knee_study_opencap",
+      "position": [
+        0.9477257,
+        0.5723345,
+        -0.8319643
+      ]
+    },
+    {
+      "name": "L_knee_study_smpl",
+      "position": [
+        0.9546830968579734,
+        0.584849230666172,
+        -0.8261576351905613
+      ]
+    },
+    {
+      "name": "r_mknee_study_opencap",
+      "position": [
+        0.9780149,
+        0.5618045,
+        -0.5148625
+      ]
+    },
+    {
+      "name": "r_mknee_study_smpl",
+      "position": [
+        0.9826706691060019,
+        0.5709626784884717,
+        -0.4988081938475165
+      ]
+    },
+    {
+      "name": "L_mknee_study_opencap",
+      "position": [
+        0.9708679,
+        0.5558205,
+        -0.704065
+      ]
+    },
+    {
+      "name": "L_mknee_study_smpl",
+      "position": [
+        0.9715205684165673,
+        0.57014495002935,
+        -0.7168355341246537
+      ]
+    },
+    {
+      "name": "r_ankle_study_opencap",
+      "position": [
+        0.8889503,
+        0.079734,
+        -0.3535695
+      ]
+    },
+    {
+      "name": "r_ankle_study_smpl",
+      "position": [
+        0.9387307926551245,
+        0.11143650618250729,
+        -0.35628861436922293
+      ]
+    },
+    {
+      "name": "L_ankle_study_opencap",
+      "position": [
+        0.881971,
+        0.0756401,
+        -0.8613526
+      ]
+    },
+    {
+      "name": "L_ankle_study_smpl",
+      "position": [
+        0.933303269851828,
+        0.11101195895574568,
+        -0.8629487612521209
+      ]
+    },
+    {
+      "name": "r_mankle_study_opencap",
+      "position": [
+        0.9367981,
+        0.0741966,
+        -0.4515998
+      ]
+    },
+    {
+      "name": "r_mankle_study_smpl",
+      "position": [
+        0.9728104383786488,
+        0.13563975122614452,
+        -0.4160103903953034
+      ]
+    },
+    {
+      "name": "L_mankle_study_opencap",
+      "position": [
+        0.9301961,
+        0.0728867,
+        -0.7671756
+      ]
+    },
+    {
+      "name": "L_mankle_study_smpl",
+      "position": [
+        0.9656679492870301,
+        0.13460544329045557,
+        -0.7988835589080322
+      ]
+    },
+    {
+      "name": "r_calc_study_opencap",
+      "position": [
+        0.8401664,
+        0.0414222,
+        -0.4241286
+      ]
+    },
+    {
+      "name": "r_calc_study_smpl",
+      "position": [
+        0.902094524739928,
+        0.06375913420537407,
+        -0.39178097753982216
+      ]
+    },
+    {
+      "name": "L_calc_study_opencap",
+      "position": [
+        0.8346891,
+        0.0347128,
+        -0.7919852
+      ]
+    },
+    {
+      "name": "L_calc_study_smpl",
+      "position": [
+        0.8967896268963356,
+        0.06065600178619711,
+        -0.8267183774169542
+      ]
+    },
+    {
+      "name": "r_toe_study_opencap",
+      "position": [
+        1.0508912,
+        0.0190891,
+        -0.3709865
+      ]
+    },
+    {
+      "name": "r_toe_study_smpl",
+      "position": [
+        1.1766091339590923,
+        0.06606528654548796,
+        -0.3991031562853756
+      ]
+    },
+    {
+      "name": "L_toe_study_opencap",
+      "position": [
+        1.0445605,
+        0.0182114,
+        -0.8509859
+      ]
+    },
+    {
+      "name": "L_toe_study_smpl",
+      "position": [
+        1.172099068219402,
+        0.0714435981519124,
+        -0.8244326541609152
+      ]
+    },
+    {
+      "name": "r_5meta_study_opencap",
+      "position": [
+        0.9958187,
+        0.0206555,
+        -0.3201269
+      ]
+    },
+    {
+      "name": "r_5meta_study_smpl",
+      "position": [
+        1.1375584660956668,
+        0.060301043997356585,
+        -0.36757596317105984
+      ]
+    },
+    {
+      "name": "L_5meta_study_opencap",
+      "position": [
+        0.9880518,
+        0.0197501,
+        -0.899978
+      ]
+    },
+    {
+      "name": "L_5meta_study_smpl",
+      "position": [
+        1.127286591287132,
+        0.06625298771609464,
+        -0.851684008760152
+      ]
+    },
+    {
+      "name": "r_lelbow_study_opencap",
+      "position": [
+        0.9411692,
+        1.2731321,
+        -0.2990105
+      ]
+    },
+    {
+      "name": "r_lelbow_study_smpl",
+      "position": [
+        0.9232116701607064,
+        1.3035907407475302,
+        -0.31450526563222203
+      ]
+    },
+    {
+      "name": "L_lelbow_study_opencap",
+      "position": [
+        0.9420667,
+        1.2782512,
+        -0.9019336
+      ]
+    },
+    {
+      "name": "L_lelbow_study_smpl",
+      "position": [
+        0.8763071778396925,
+        1.3181410239588875,
+        -0.882706712408873
+      ]
+    },
+    {
+      "name": "r_melbow_study_opencap",
+      "position": [
+        0.9268126,
+        1.2533428,
+        -0.3911448
+      ]
+    },
+    {
+      "name": "r_melbow_study_smpl",
+      "position": [
+        0.9125562498796735,
+        1.2900095760606272,
+        -0.3862192470344229
+      ]
+    },
+    {
+      "name": "L_melbow_study_opencap",
+      "position": [
+        0.9261119,
+        1.2563555,
+        -0.8007082
+      ]
+    },
+    {
+      "name": "L_melbow_study_smpl",
+      "position": [
+        0.8702111459794601,
+        1.3073897177490386,
+        -0.8065543814722307
+      ]
+    },
+    {
+      "name": "r_lwrist_study_opencap",
+      "position": [
+        1.0362443,
+        0.9831043,
+        -0.2908228
+      ]
+    },
+    {
+      "name": "r_lwrist_study_smpl",
+      "position": [
+        1.0189329533463263,
+        1.0281036083690474,
+        -0.2827879134547765
+      ]
+    },
+    {
+      "name": "L_lwrist_study_opencap",
+      "position": [
+        1.0460478,
+        0.9907402,
+        -0.9029096
+      ]
+    },
+    {
+      "name": "L_lwrist_study_smpl",
+      "position": [
+        0.9756496777115834,
+        1.04026187121896,
+        -0.8977023081217868
+      ]
+    },
+    {
+      "name": "r_mwrist_study_opencap",
+      "position": [
+        0.962836,
+        0.9679769,
+        -0.2637957
+      ]
+    },
+    {
+      "name": "r_mwrist_study_smpl",
+      "position": [
+        0.9641584962454753,
+        1.0327242299665411,
+        -0.25326135233262764
+      ]
+    },
+    {
+      "name": "L_mwrist_study_opencap",
+      "position": [
+        0.9732717,
+        0.9658964,
+        -0.9232963
+      ]
+    },
+    {
+      "name": "L_mwrist_study_smpl",
+      "position": [
+        0.9234823042866833,
+        1.0430656916114391,
+        -0.926804475647192
+      ]
+    },
+    {
+      "name": "r_thigh1_study_opencap",
+      "position": [
+        1.0734867,
+        0.8778565,
+        -0.4012579
+      ]
+    },
+    {
+      "name": "r_thigh1_study_smpl",
+      "position": [
+        1.0538851826300462,
+        0.8417077314760362,
+        -0.5363081209885133
+      ]
+    },
+    {
+      "name": "r_thigh2_study_opencap",
+      "position": [
+        1.0267194,
+        0.7627902,
+        -0.3717221
+      ]
+    },
+    {
+      "name": "r_thigh2_study_smpl",
+      "position": [
+        0.9987733199520525,
+        0.882461180932417,
+        -0.38642678859992186
+      ]
+    },
+    {
+      "name": "r_thigh3_study_opencap",
+      "position": [
+        0.9402258,
+        0.8960924,
+        -0.3737849
+      ]
+    },
+    {
+      "name": "r_thigh3_study_smpl",
+      "position": [
+        0.8900149966813589,
+        0.8581521033391425,
+        -0.497528670361196
+      ]
+    },
+    {
+      "name": "L_thigh1_study_opencap",
+      "position": [
+        1.056883,
+        0.8764151,
+        -0.8113767
+      ]
+    },
+    {
+      "name": "L_thigh1_study_smpl",
+      "position": [
+        1.0251098775651362,
+        0.8400012304148015,
+        -0.6552630052316236
+      ]
+    },
+    {
+      "name": "L_thigh2_study_opencap",
+      "position": [
+        1.006991,
+        0.7608517,
+        -0.8435629
+      ]
+    },
+    {
+      "name": "L_thigh2_study_smpl",
+      "position": [
+        0.9879719181874778,
+        0.8821097448814377,
+        -0.8256723690067118
+      ]
+    },
+    {
+      "name": "L_thigh3_study_opencap",
+      "position": [
+        0.9207462,
+        0.8913746,
+        -0.8267391
+      ]
+    },
+    {
+      "name": "L_thigh3_study_smpl",
+      "position": [
+        0.8790734856795839,
+        0.8533603560116297,
+        -0.7468315960690682
+      ]
+    },
+    {
+      "name": "r_sh1_study_opencap",
+      "position": [
+        0.9341272,
+        0.4277013,
+        -0.3611509
+      ]
+    },
+    {
+      "name": "r_sh1_study_smpl",
+      "position": [
+        1.005134520329386,
+        0.5014028874074595,
+        -0.4247225761683908
+      ]
+    },
+    {
+      "name": "r_sh2_study_opencap",
+      "position": [
+        0.9503779,
+        0.2800893,
+        -0.3332177
+      ]
+    },
+    {
+      "name": "r_sh2_study_smpl",
+      "position": [
+        0.994788640812775,
+        0.36123412662948057,
+        -0.4040180249270519
+      ]
+    },
+    {
+      "name": "r_sh3_study_opencap",
+      "position": [
+        0.8668722,
+        0.295481,
+        -0.3472854
+      ]
+    },
+    {
+      "name": "r_sh3_study_smpl",
+      "position": [
+        0.9896143001914248,
+        0.19399150928610956,
+        -0.38674537170059653
+      ]
+    },
+    {
+      "name": "L_sh1_study_opencap",
+      "position": [
+        0.9226794,
+        0.4241495,
+        -0.8551748
+      ]
+    },
+    {
+      "name": "L_sh1_study_smpl",
+      "position": [
+        0.9939533646141782,
+        0.500094825971803,
+        -0.7891153772649492
+      ]
+    },
+    {
+      "name": "L_sh2_study_opencap",
+      "position": [
+        0.9407286,
+        0.277602,
+        -0.884232
+      ]
+    },
+    {
+      "name": "L_sh2_study_smpl",
+      "position": [
+        0.979332182849436,
+        0.323934193065614,
+        -0.8375502298403055
+      ]
+    },
+    {
+      "name": "L_sh3_study_opencap",
+      "position": [
+        0.8568688,
+        0.2925661,
+        -0.8658856
+      ]
+    },
+    {
+      "name": "L_sh3_study_smpl",
+      "position": [
+        0.9813833306767802,
+        0.19509077359696347,
+        -0.8279680964060836
+      ]
+    },
+    {
+      "name": "RHJC_study_opencap",
+      "position": [
+        0.9767555,
+        1.0475618,
+        -0.5101917
+      ]
+    },
+    {
+      "name": "RHJC_study_smpl",
+      "position": [
+        0.9720942761188133,
+        1.0077214054758463,
+        -0.5329736538897388
+      ]
+    },
+    {
+      "name": "LHJC_study_opencap",
+      "position": [
+        0.9692746,
+        1.0396117,
+        -0.6846136
+      ]
+    },
+    {
+      "name": "LHJC_study_smpl",
+      "position": [
+        0.9563317186305205,
+        1.0050987720814606,
+        -0.6792817123225289
+      ]
+    },
+    {
+      "name": "rmeta5_manual_smpl",
+      "position": [
+        1.1074239015579224,
+        0.05061832070350647,
+        -0.31557798385620117
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rtoe_manual_smpl",
+      "position": [
+        1.1375584660956668,
+        0.060301043997356585,
+        -0.36757596317105984
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rsh2_manual_smpl",
+      "position": [
+        0.964759349822998,
+        0.2832157015800476,
+        -0.35565385222435
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rsh3_manual_smpl",
+      "position": [
+        0.8943560719490051,
+        0.2840401530265808,
+        -0.38627853989601135
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rsh1_manual_smpl",
+      "position": [
+        0.9332927465438843,
+        0.418213814496994,
+        -0.3519630432128906
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rthigh1_manual_smpl",
+      "position": [
+        1.070472240447998,
+        0.8716283440589905,
+        -0.43072202801704407
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rthigh2_manual_smpl",
+      "position": [
+        1.0337677001953125,
+        0.7645421028137207,
+        -0.40305447578430176
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rthigh3_manual_smpl",
+      "position": [
+        0.9228671193122864,
+        0.8920834064483643,
+        -0.40111014246940613
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rsh3repla_manual_smpl",
+      "position": [
+        0.8957337141036987,
+        0.3308553099632263,
+        -0.37168434262275696
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rsh1repla_manual_smpl",
+      "position": [
+        0.969609260559082,
+        0.45163649320602417,
+        -0.36042484641075134
+      ],
+      "color": [
+        1.0,
+        1.0,
+        0.0
+      ]
+    }
+  ]
+}

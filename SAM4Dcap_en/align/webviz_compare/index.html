@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>subject2 five-way alignment comparison</title>
+  <style>
+    body { margin: 0; overflow: hidden; font-family: sans-serif; background: #111; color: #eee; }
+    #ui { position: absolute; top: 10px; left: 10px; padding: 10px; background: rgba(0,0,0,0.65); border-radius: 6px; max-width: 360px; }
+    #ui label { display: block; margin-bottom: 4px; }
+    #sources { margin-top: 6px; margin-bottom: 6px; }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.1/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.1/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="ui">
+    <div><strong>subject2 Cam1 monocular vs OpenCap</strong></div>
+    <div id="frameLabel">Frame 0</div>
+    <label>
+      <input id="frameSlider" type="range" min="0" max="0" value="0" step="1">
+    </label>
+    <button id="playBtn">Play</button>
+    <span id="info"></span>
+    <div id="sources"></div>
+    <div id="meta"></div>
+  </div>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const ui = {
+      frameLabel: document.getElementById('frameLabel'),
+      frameSlider: document.getElementById('frameSlider'),
+      playBtn: document.getElementById('playBtn'),
+      info: document.getElementById('info'),
+      sources: document.getElementById('sources'),
+      meta: document.getElementById('meta')
+    };
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x111111);
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.01, 100);
+    camera.position.set(0, 1.6, 4);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 1.0, 0);
+    controls.update();
+
+    scene.add(new THREE.GridHelper(10, 20, 0x444444, 0x222222));
+    scene.add(new THREE.AxesHelper(0.3));
+
+    const sourceStyles = {
+      opencap_markers: { color: 0x3498db, size: 0.012, label: 'OpenCap markers' },
+      mhr_mesh: { color: 0xe74c3c, size: 0.01, label: 'MHR mesh (downsample)' },
+      smpl_mesh: { color: 0xf39c12, size: 0.01, label: 'SMPL mesh (downsample)' },
+      smpl_markers_43: { color: 0xf1c40f, size: 0.015, label: 'SMPL 43 markers' },
+      preview_markers: { color: 0x2ecc71, size: 0.013, label: 'smpl2ab TRC markers' },
+    };
+
+    let data = null;
+    let frameIdx = 0;
+    let playing = false;
+    let lastTime = 0;
+    let frameInterval = 1 / 60;
+    const renderSources = {}; // key -> {points, attr}
+
+    fetch('data.json')
+      .then(r => r.json())
+      .then(d => {
+        data = d;
+        frameInterval = 1 / (d.frame_rate || 60);
+        ui.frameSlider.max = d.num_frames - 1;
+        ui.frameSlider.value = 0;
+        ui.info.textContent = `Frames: ${d.num_frames}`;
+        const lagInfo = typeof d.temporal_lag_frames === 'object'
+          ? JSON.stringify(d.temporal_lag_frames)
+          : d.temporal_lag_frames;
+        const offsetInfo = typeof d.vertical_offset_applied === 'object'
+          ? JSON.stringify(d.vertical_offset_applied)
+          : d.vertical_offset_applied.toFixed(4);
+        ui.meta.textContent = `lag=${lagInfo}, scale=${d.sam4d_scale_height.toFixed(3)}, offset_y=${offsetInfo}, rotations=${JSON.stringify(d.rotations_applied)}`;
+        initSources();
+        updateFrame(0);
+        animate();
+      })
+      .catch(err => {
+        ui.info.textContent = 'Failed to load data.json: ' + err;
+        console.error(err);
+      });
+
+    function initSources() {
+      ui.sources.innerHTML = '';
+      Object.entries(data.sources).forEach(([key, src]) => {
+        const style = sourceStyles[key] || { color: 0xffffff, size: 0.01, label: key };
+        const first = src.points[0];
+        const count = first.length;
+        const geometry = new THREE.BufferGeometry();
+        const attr = new THREE.BufferAttribute(new Float32Array(count * 3), 3);
+        geometry.setAttribute('position', attr);
+        const material = new THREE.PointsMaterial({ color: style.color, size: style.size });
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+        renderSources[key] = { points, attr, label: style.label, count };
+
+        const row = document.createElement('label');
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = true;
+        cb.addEventListener('change', () => {
+          points.visible = cb.checked;
+        });
+        row.appendChild(cb);
+        row.appendChild(document.createTextNode(` ${style.label} (${count} pts)`));
+        ui.sources.appendChild(row);
+      });
+    }
+
+    function updateFrame(idx) {
+      frameIdx = idx;
+      ui.frameSlider.value = idx;
+      ui.frameLabel.textContent = `Frame ${idx}`;
+
+      Object.entries(renderSources).forEach(([key, renderer]) => {
+        const frame = data.sources[key].points[idx];
+        const attr = renderer.attr;
+        for (let i = 0; i < frame.length; i++) {
+          const p = frame[i];
+          attr.setXYZ(i, p[0], p[1], p[2]);
+        }
+        attr.needsUpdate = true;
+      });
+    }
+
+    ui.frameSlider.addEventListener('input', (e) => {
+      playing = false;
+      ui.playBtn.textContent = 'Play';
+      updateFrame(parseInt(e.target.value, 10));
+    });
+
+    ui.playBtn.addEventListener('click', () => {
+      playing = !playing;
+      ui.playBtn.textContent = playing ? 'Pause' : 'Play';
+    });
+
+    function animate(time) {
+      requestAnimationFrame(animate);
+      if (playing && data) {
+        if (!lastTime) lastTime = time;
+        const dt = (time - lastTime) / 1000;
+        if (dt >= frameInterval) {
+          lastTime = time;
+          const next = (frameIdx + 1) % data.num_frames;
+          updateFrame(next);
+        }
+      }
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

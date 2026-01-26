@@ -1,0 +1,21 @@
+Body4D（pipeline1/2）:
+- /TVB/sam3/sam3.pt
+- /TVB/sam-3d-body-dinov3/model.ckpt
+- /TVB/sam-3d-body-dinov3/assets/mhr_model.pt
+- /TVB/moge-2-vitl-normal/model.pt
+- /TVB/diffusion-vas-amodal-segmentation/
+- /TVB/diffusion-vas-content-completion/
+- /TVB/Depth-Anything-V2-Large/depth_anything_v2_vitl.pth
+- /TVB/vitdet/
+
+MHR → SMPL（pipeline1/2）:
+- /TVB/MHRtoSMPL/SMPL_NEUTRAL_chumpy_free.pkl
+- /TVB/MHR/assets/
+
+AddBiomechanics（pipeline1）:
+- /TVB/SMPL2AddBiomechanics/models/bsm/bsm.osim
+
+OpenCap（opencap.sh）:
+- /TVB/opencap-core/mmpose/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth
+- /TVB/opencap-core/mmpose/hrnet_w48_coco_wholebody_384x288_dark-f5726563_20200918.pth
+- /TVB/opencap-core/opensimPipeline/Models/LaiUhlrich2022.osim

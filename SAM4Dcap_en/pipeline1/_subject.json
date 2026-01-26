@@ -1,0 +1,10 @@
+{
+  "massKg": 78.2,
+  "heightM": 1.96,
+  "ageYears": 28,
+  "sex": "male",
+  "subjectTags": ["Unimpaired"],
+  "skeletonPreset": "custom",
+  "disableDynamics": true,
+  "runMoco": false
+}

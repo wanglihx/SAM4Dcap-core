@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OpenSim MarkerSet Visualization (static)</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <div class="row">
+        <div class="group grow">
+          <label>scene JSON</label>
+          <input id="scenePath" value="scene_updated_mapping_overlay.json" />
+        </div>
+        <div class="group grow">
+          <label>SMPL mesh JSON</label>
+          <input id="smplMeshPath" value="smpl_frame0_aligned_mesh.json" placeholder="e.g., smpl_frame0_aligned_mesh.json" />
+        </div>
+        <button id="load">Load</button>
+      </div>
+      <div id="meta" class="meta">Not loaded</div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel sidebar">
+        <div class="section">
+          <div class="section-title">Display</div>
+          <label class="check"><input id="showMesh" type="checkbox" checked />Segment meshes (VTP)</label>
+          <label class="check"><input id="showSkeleton" type="checkbox" checked />Skeleton</label>
+          <label class="check"><input id="showBodies" type="checkbox" />Body origins</label>
+          <label class="check"><input id="showMarkers" type="checkbox" checked />Markers</label>
+          <label class="check"><input id="showLabels" type="checkbox" />Marker names</label>
+          <label class="check"><input id="showSmpl" type="checkbox" />SMPL mesh</label>
+          <label class="check"><input id="showGrid" type="checkbox" checked />Grid</label>
+          <label class="check"><input id="showAxes" type="checkbox" checked />Axes</label>
+
+          <div class="selected">
+            <span class="selected-title">Selected marker</span>
+            <code id="selectedMarker">(none)</code>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Marker size</div>
+          <input id="markerSize" type="range" min="0.001" max="0.06" step="0.001" value="0.02" />
+          <div class="hint">Drag to adjust marker radius</div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Markers (43)</div>
+          <input id="markerFilter" class="filter" placeholder="Search (e.g., C7 / ASIS / knee)" />
+          <div class="row small-gap">
+            <button id="showAllMarkers">Show all</button>
+            <button id="hideAllMarkers">Hide all</button>
+          </div>
+          <div id="markerList" class="marker-list"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Manual picks</div>
+          <div class="row small-gap">
+            <button id="startPick">Start picking</button>
+            <button id="savePick" disabled>Save</button>
+            <button id="cancelPick" disabled>Delete</button>
+          </div>
+          <div class="group">
+            <label>Preview point size (m)</label>
+            <input id="previewSize" type="range" min="0.001" max="0.04" step="0.001" value="0.015" />
+          </div>
+          <div class="group">
+            <label>Saved point size (m)</label>
+            <input id="savedSize" type="range" min="0.001" max="0.04" step="0.001" value="0.015" />
+          </div>
+          <div class="group">
+            <label>Notes</label>
+            <textarea id="pickNote" rows="2" placeholder="Pick notes (optional)"></textarea>
+          </div>
+          <div class="manual-status" id="pickStatus">Not selected</div>
+          <button id="exportPicks" class="block" disabled>Export picks</button>
+          <div class="hint mini">After enabling, click markers or mesh vertices; re-enable “Start picking” after save/delete.</div>
+        </div>
+      </aside>
+
+      <section class="panel viewer-panel">
+        <div id="viewer" class="viewer"></div>
+        <div class="hint">
+          Drag to rotate, scroll to zoom, right-click to pan. This page shows the static MarkerSet positions in the default pose (does not load .mot).
+        </div>
+      </section>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

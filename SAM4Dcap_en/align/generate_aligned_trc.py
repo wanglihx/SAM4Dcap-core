@@ -1,0 +1,360 @@
+#!/usr/bin/env python3
+"""
+Generate a 105-point TRC directly from smpl_results and align it to the OpenCap reference.
+Outputs:
+- webviz_compare/data.json: visualization data
+- output/aligned_subject2_motion.trc: aligned 105-point TRC (for IK/preview)
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+import pickle
+from pathlib import Path
+from typing import Dict, List, Tuple
+
+import numpy as np
+import torch
+import yaml
+from scipy.spatial.transform import Rotation as R
+import smplx
+
+import sys
+
+sys.path.insert(0, "/root/TVB/opencap-core")
+from utilsDataman import TRCFile  # noqa: E402
+
+
+def load_cam_params(cam_pickle: Path) -> Tuple[np.ndarray, np.ndarray]:
+    with cam_pickle.open("rb") as f:
+        cam = pickle.load(f)
+    return cam["rotation"], cam["translation"].reshape(3, 1)  # R_cam, t_cam(mm)
+
+
+def rotation_sequence(session_meta: Path) -> list[tuple[str, float]]:
+    meta = yaml.safe_load(session_meta.read_text())
+    placement = meta["checkerBoard"]["placement"]
+    if placement in ("backWall", "Perpendicular"):
+        return [("y", 90), ("z", 180)]
+    elif placement in ("ground", "Lying"):
+        return [("x", 90), ("y", 90)]
+    raise ValueError(f"Unsupported checkerboard placement: {placement}")
+
+
+def best_lag(a: List[float], b: List[float], max_lag: int = 90) -> int:
+    a = np.asarray(a, float)
+    b = np.asarray(b, float)
+    best = 0
+    best_corr = -1.0
+    for lag in range(-max_lag, max_lag + 1):
+        if lag >= 0:
+            a_seg = a[lag:]
+            b_seg = b[: len(a_seg)]
+        else:
+            a_seg = a[: len(a) + lag]
+            b_seg = b[-lag:]
+        n = min(len(a_seg), len(b_seg))
+        if n < 10:
+            continue
+        aa = a_seg[:n] - a_seg[:n].mean()
+        bb = b_seg[:n] - b_seg[:n].mean()
+        denom = np.linalg.norm(aa) * np.linalg.norm(bb) + 1e-8
+        corr = float(np.dot(aa, bb) / denom)
+        if corr > best_corr:
+            best_corr = corr
+            best = lag
+    return best
+
+
+def transform_cam_points(
+    pts_cam_m: np.ndarray,
+    scale: float,
+    R_cam: np.ndarray,
+    t_cam_mm: np.ndarray,
+    rot_seq: list[tuple[str, float]],
+) -> np.ndarray:
+    cam_mm = pts_cam_m * scale * 1000.0
+    world_mm = (R_cam.T @ (cam_mm.T - t_cam_mm)).T
+    world_m = world_mm / 1000.0
+    for axis, angle in rot_seq:
+        world_m = R.from_euler(axis, angle, degrees=True).apply(world_m)
+    return world_m
+
+
+def load_opencap_trc(trc_path: Path) -> Tuple[np.ndarray, List[str], float]:
+    trc = TRCFile(trc_path)
+    n = trc.num_markers
+    pts = np.zeros((trc.num_frames, n, 3), dtype=np.float32)
+    for i, name in enumerate(trc.marker_names):
+        pts[:, i, 0] = trc.data[name + "_tx"]
+        pts[:, i, 1] = trc.data[name + "_ty"]
+        pts[:, i, 2] = trc.data[name + "_tz"]
+    return pts, trc.marker_names, float(trc.data_rate)
+
+
+def load_mapping(csv_path: Path) -> List[Tuple[str, int]]:
+    rows: List[Tuple[str, int]] = []
+    with csv_path.open() as f:
+        reader = csv.DictReader(f)
+        for r in reader:
+            rows.append((r["smpl_name"], int(r["smpl_vertex"])))
+    return rows
+
+
+def load_bsm_markers(yaml_path: Path) -> Tuple[List[str], np.ndarray]:
+    markers = yaml.safe_load(yaml_path.read_text())
+    names = list(markers.keys())
+    idx = np.array(list(markers.values()), dtype=int)
+    return names, idx
+
+
+def smpl_verts_and_hips(model: smplx.SMPL, npz_path: Path) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
+    d = np.load(npz_path)
+    with torch.no_grad():
+        out = model(
+            betas=torch.from_numpy(d["betas"][None]).float(),
+            body_pose=torch.from_numpy(d["body_pose"][None]).float(),
+            global_orient=torch.from_numpy(d["global_orient"][None]).float(),
+            transl=torch.from_numpy(d["transl"][None]).float(),
+        )
+    verts = out.vertices[0].cpu().numpy().astype(np.float32)
+    joints = out.joints[0].cpu().numpy().astype(np.float32)
+    hips = {"RHJC": joints[2], "LHJC": joints[1]}  # smplx joint indices
+    return verts, hips
+
+
+def procrustes_similarity(src: np.ndarray, dst: np.ndarray) -> Tuple[float, np.ndarray, np.ndarray]:
+    """Similarity transform (scale, R, t) s.t. scale*R@src + t ~= dst."""
+    assert src.shape == dst.shape and src.shape[1] == 3
+    n = src.shape[0]
+    src_mean = src.mean(axis=0)
+    dst_mean = dst.mean(axis=0)
+    X = src - src_mean
+    Y = dst - dst_mean
+    cov = X.T @ Y / n
+    U, S, Vt = np.linalg.svd(cov)
+    Rm = Vt.T @ U.T
+    if np.linalg.det(Rm) < 0:
+        Vt[-1, :] *= -1
+        Rm = Vt.T @ U.T
+    scale = (n * S.sum()) / np.square(X).sum()
+    t = dst_mean - scale * (Rm @ src_mean)
+    return scale, Rm, t
+
+
+def write_trc(path: Path, names: List[str], points: List[np.ndarray], data_rate: float) -> None:
+    num_frames = len(points)
+    num_markers = len(names)
+    header1 = f"PathFileType\t4\t(X/Y/Z)\t{path}"
+    header2 = (
+        "DataRate\tCameraRate\tNumFrames\tNumMarkers\tUnits\tOrigDataRate\tOrigDataStartFrame\tOrigNumFrames"
+    )
+    header3 = f"{data_rate:.1f}\t{data_rate:.1f}\t{num_frames}\t{num_markers}\tm\t{data_rate:.1f}\t1\t{num_frames}"
+    name_fields = []
+    for n in names:
+        name_fields.extend([n, "", ""])
+    header4 = "\t".join(["Frame#", "Time"] + name_fields)
+    coord_fields = []
+    for i in range(num_markers):
+        coord_fields.extend([f"X{i+1}", f"Y{i+1}", f"Z{i+1}"])
+    header5 = "\t" + "\t".join(coord_fields)
+
+    lines = [header1, header2, header3, header4, header5]
+    for frame_idx, pts in enumerate(points, start=1):
+        t = (frame_idx - 1) / data_rate
+        vals = [f"{frame_idx}", f"{t:.7f}"]
+        for p in pts:
+            vals.extend([f"{p[0]:.7f}", f"{p[1]:.7f}", f"{p[2]:.7f}"])
+        lines.append("\t".join(vals))
+    path.write_text("\n".join(lines))
+
+
+def main() -> None:
+    root = Path(__file__).resolve().parent
+    pipeline_root = Path("/root/TVB/SAM4Dcap/pipeline1")
+
+    opencap_data_root = Path("/root/TVB/SAM4Dcap/opencap/data/subject2/Session0")
+    opencap_output_root = Path("/root/TVB/SAM4Dcap/opencap/output/Data/subject2_Session0")
+    trc_opencap_path = opencap_output_root / "MarkerData/mmpose_0.8/2-cameras/PostAugmentation_v0.2/DJ1_syncdWithMocap_LSTM.trc"
+    cam_pickle = opencap_data_root / "Videos/Cam1/cameraIntrinsicsExtrinsics.pickle"
+    session_meta = opencap_data_root / "sessionMetadata.yaml"
+
+    mhr_dir = pipeline_root / "mhr_params"
+    smpl_dir = pipeline_root / "smpl_results"
+    mapping_csv = Path("/root/TVB/SAM4Dcap/align_43marks/updated_mapping.csv")
+    bsm_yaml = Path("/root/TVB/SMPL2AddBiomechanics/smpl2ab/data/bsm_markers.yaml")
+    smpl_model_path = Path("/root/TVB/MHRtoSMPL/SMPL_NEUTRAL_chumpy_free.pkl")
+
+    rot_seq = rotation_sequence(session_meta)
+    R_cam, t_cam = load_cam_params(cam_pickle)
+    mapping = load_mapping(mapping_csv)
+    bsm_names, bsm_idx = load_bsm_markers(bsm_yaml)
+
+    trc_opencap, op_names, frame_rate = load_opencap_trc(trc_opencap_path)
+
+    mhr_files = sorted(mhr_dir.glob("*_data.npz"))
+    smpl_files = sorted(smpl_dir.glob("*.npz"))
+    if not mhr_files or not smpl_files:
+        raise FileNotFoundError("Missing MHR or SMPL files")
+
+    max_frames = min(len(mhr_files), len(smpl_files), trc_opencap.shape[0])
+
+    smpl_model = smplx.SMPL(model_path=str(smpl_model_path), batch_size=1)
+
+    first_smpl_body = np.load(smpl_files[0])["vertices"].astype(np.float32)
+    meta = yaml.safe_load(session_meta.read_text())
+    height_m = float(meta["height_m"])
+    height_pred = first_smpl_body[:, 1].max() - first_smpl_body[:, 1].min()
+    scale = float(height_m / height_pred)
+
+    num_samples_mesh = 800
+    mhr_sample_idx = np.linspace(
+        0, np.load(mhr_files[0], allow_pickle=True)["data"].item()["pred_vertices"].shape[0] - 1, num_samples_mesh, dtype=int
+    )
+    smpl_sample_idx = np.linspace(0, first_smpl_body.shape[0] - 1, num_samples_mesh, dtype=int)
+
+    mhr_world_frames: List[np.ndarray] = []
+    smpl_world_frames: List[np.ndarray] = []
+    smpl43_world_frames: List[np.ndarray] = []
+    bsm105_world_frames: List[np.ndarray] = []
+    mhr_min_y_raw: List[float] = []
+    bsm105_min_y_raw: List[float] = []
+
+    for i in range(max_frames):
+        mhr_npz = np.load(mhr_files[i], allow_pickle=True)["data"].item()
+        mhr_cam = mhr_npz["pred_vertices"].astype(np.float32) + mhr_npz["pred_cam_t"].astype(np.float32)
+        mhr_world = transform_cam_points(mhr_cam, scale, R_cam, t_cam, rot_seq)
+        mhr_world_frames.append(mhr_world)
+        mhr_min_y_raw.append(float(mhr_world[:, 1].min()))
+
+        smpl_npz = np.load(smpl_files[i])
+        smpl_body = smpl_npz["vertices"].astype(np.float32)
+        smpl_cam = smpl_body + mhr_npz["pred_cam_t"].astype(np.float32)
+        smpl_world = transform_cam_points(smpl_cam, scale, R_cam, t_cam, rot_seq)
+        smpl_world_frames.append(smpl_world)
+
+        smpl_model_verts, hips_model = smpl_verts_and_hips(smpl_model, smpl_files[i])
+        s_scale, s_R, s_t = procrustes_similarity(smpl_model_verts, smpl_body)
+        hips_stored = {k: s_scale * (s_R @ v) + s_t for k, v in hips_model.items()}
+
+        pts43 = [smpl_body[idx] for _, idx in mapping]
+        pts43.append(hips_stored["RHJC"])
+        pts43.append(hips_stored["LHJC"])
+        pts43 = np.stack(pts43, axis=0) + mhr_npz["pred_cam_t"].astype(np.float32)
+        pts43_world = transform_cam_points(pts43, scale, R_cam, t_cam, rot_seq)
+        smpl43_world_frames.append(pts43_world)
+
+        pts105 = smpl_body[bsm_idx] + mhr_npz["pred_cam_t"].astype(np.float32)
+        pts105_world = transform_cam_points(pts105, scale, R_cam, t_cam, rot_seq)
+        bsm105_world_frames.append(pts105_world)
+        bsm105_min_y_raw.append(float(pts105_world[:, 1].min()))
+
+    op_min_y_raw: List[float] = [float(trc_opencap[i][:, 1].min()) for i in range(trc_opencap.shape[0])]
+
+    lag_mhr = best_lag(mhr_min_y_raw, op_min_y_raw, max_lag=90)
+    lag_all = lag_mhr  # use a unified time offset for all sequences
+
+    sam_start = max(0, lag_all)
+    op_start = max(0, -lag_all)
+    n_frames = min(
+        len(mhr_world_frames) - sam_start,
+        len(smpl_world_frames) - sam_start,
+        len(smpl43_world_frames) - sam_start,
+        len(bsm105_world_frames) - sam_start,
+        trc_opencap.shape[0] - op_start,
+    )
+
+    mhr_world_frames = mhr_world_frames[sam_start : sam_start + n_frames]
+    smpl_world_frames = smpl_world_frames[sam_start : sam_start + n_frames]
+    smpl43_world_frames = smpl43_world_frames[sam_start : sam_start + n_frames]
+    bsm105_world_frames = bsm105_world_frames[sam_start : sam_start + n_frames]
+    opencap_frames = trc_opencap[op_start : op_start + n_frames]
+
+    mhr_points = []
+    smpl_points = []
+    smpl43_points = []
+    bsm105_points = []
+    mhr_min_y = []
+    bsm105_min_y = []
+    for i in range(n_frames):
+        mhr_frame = mhr_world_frames[i]
+        smpl_frame = smpl_world_frames[i]
+        smpl43_frame = smpl43_world_frames[i]
+        bsm105_frame = bsm105_world_frames[i]
+
+        mhr_points.append(mhr_frame[mhr_sample_idx])
+        smpl_points.append(smpl_frame[smpl_sample_idx])
+        smpl43_points.append(smpl43_frame)
+        bsm105_points.append(bsm105_frame)
+
+        mhr_min_y.append(float(mhr_frame[:, 1].min()))
+        bsm105_min_y.append(float(bsm105_frame[:, 1].min()))
+
+    offset_y = float(-min(np.min(mhr_min_y), np.min(bsm105_min_y)))
+
+    for seq in (mhr_points, smpl_points, smpl43_points, bsm105_points):
+        for frame in seq:
+            frame[:, 1] += offset_y
+
+    def to_list(seq: List[np.ndarray]) -> List[List[List[float]]]:
+        return [np.round(f.astype(np.float32), 4).tolist() for f in seq]
+
+    out = {
+        "num_frames": n_frames,
+        "frame_rate": frame_rate,
+        "rotations_applied": rot_seq,
+        "sam4d_scale_height": scale,
+        "temporal_lag_frames": {
+            "mhr_smpl": int(lag_all),
+            "markers_105": int(lag_all),
+        },
+        "vertical_offset_applied": float(offset_y),
+        "sources": {
+            "opencap_markers": {
+                "type": "markers",
+                "names": op_names,
+                "points": to_list([opencap_frames[i] for i in range(n_frames)]),
+            },
+            "mhr_mesh": {
+                "type": "points",
+                "sample_indices": mhr_sample_idx.tolist(),
+                "points": to_list(mhr_points),
+            },
+            "smpl_mesh": {
+                "type": "points",
+                "sample_indices": smpl_sample_idx.tolist(),
+                "points": to_list(smpl_points),
+            },
+            "smpl_markers_43": {
+                "type": "markers",
+                "names": [name for name, _ in mapping] + ["RHJC_smpl", "LHJC_smpl"],
+                "points": to_list(smpl43_points),
+            },
+            "smpl_markers_105": {
+                "type": "markers",
+                "names": bsm_names,
+                "points": to_list(bsm105_points),
+            },
+        },
+    }
+
+    out_dir = root / "webviz_compare"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "data.json"
+    out_path.write_text(json.dumps(out))
+
+    trc_out_dir = root / "output"
+    trc_out_dir.mkdir(parents=True, exist_ok=True)
+    trc_out_path = trc_out_dir / "aligned_subject2_motion.trc"
+    write_trc(trc_out_path, bsm_names, bsm105_points, frame_rate)
+
+    print(
+        f"[OK] wrote {out_path} with {n_frames} frames "
+        f"(lag={lag_all}, offset_y={offset_y:.4f}, scale={scale:.4f})"
+    )
+    print(f"[OK] wrote aligned TRC for IK rerun: {trc_out_path}")
+
+
+if __name__ == "__main__":
+    main()

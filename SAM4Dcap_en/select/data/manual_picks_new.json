@@ -1,0 +1,174 @@
+{
+  "picks": [
+    {
+      "id": 1,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 6718,
+      "position": [
+        1.1074239015579224,
+        0.05061832070350647,
+        -0.31557798385620117
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rmeta5",
+      "timestamp": "2026-01-09T09:06:50.568Z"
+    },
+    {
+      "id": 2,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "marker",
+      "name": "r_5meta_study_smpl",
+      "geom": null,
+      "vertex": null,
+      "position": [
+        1.1375584660956668,
+        0.060301043997356585,
+        -0.36757596317105984
+      ],
+      "meshType": null,
+      "meshPath": null,
+      "note": "rtoe",
+      "timestamp": "2026-01-09T09:08:18.092Z"
+    },
+    {
+      "id": 3,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4604,
+      "position": [
+        0.964759349822998,
+        0.2832157015800476,
+        -0.35565385222435
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rsh2",
+      "timestamp": "2026-01-09T09:09:14.185Z"
+    },
+    {
+      "id": 4,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4614,
+      "position": [
+        0.8943560719490051,
+        0.2840401530265808,
+        -0.38627853989601135
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rsh3",
+      "timestamp": "2026-01-09T09:09:55.275Z"
+    },
+    {
+      "id": 5,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4581,
+      "position": [
+        0.9332927465438843,
+        0.418213814496994,
+        -0.3519630432128906
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rsh1",
+      "timestamp": "2026-01-09T09:10:13.966Z"
+    },
+    {
+      "id": 6,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4360,
+      "position": [
+        1.070472240447998,
+        0.8716283440589905,
+        -0.43072202801704407
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rthigh1",
+      "timestamp": "2026-01-09T09:11:13.041Z"
+    },
+    {
+      "id": 7,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4445,
+      "position": [
+        1.0337677001953125,
+        0.7645421028137207,
+        -0.40305447578430176
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rthigh2",
+      "timestamp": "2026-01-09T09:11:35.594Z"
+    },
+    {
+      "id": 8,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4389,
+      "position": [
+        0.9228671193122864,
+        0.8920834064483643,
+        -0.40111014246940613
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rthigh3",
+      "timestamp": "2026-01-09T09:12:10.135Z"
+    },
+    {
+      "id": 9,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4947,
+      "position": [
+        0.8957337141036987,
+        0.3308553099632263,
+        -0.37168434262275696
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rsh3repla",
+      "timestamp": "2026-01-09T09:16:40.721Z"
+    },
+    {
+      "id": 10,
+      "scene": "scene_manual_picks_overlay.json",
+      "type": "mesh",
+      "name": null,
+      "geom": "smpl_mesh",
+      "vertex": 4585,
+      "position": [
+        0.969609260559082,
+        0.45163649320602417,
+        -0.36042484641075134
+      ],
+      "meshType": "smpl",
+      "meshPath": "smpl_frame0_aligned_mesh.json",
+      "note": "rsh1repla",
+      "timestamp": "2026-01-09T09:17:56.046Z"
+    }
+  ]
+}

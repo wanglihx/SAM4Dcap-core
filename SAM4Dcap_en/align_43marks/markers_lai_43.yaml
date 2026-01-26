@@ -1,0 +1,129 @@
+C7_study:
+  type: vertex
+  index: 1306
+r_shoulder_study:
+  type: vertex
+  index: 4724
+L_shoulder_study:
+  type: vertex
+  index: 1239
+r.ASIS_study:
+  type: vertex
+  index: 6573
+L.ASIS_study:
+  type: vertex
+  index: 3156
+r.PSIS_study:
+  type: vertex
+  index: 6522
+L.PSIS_study:
+  type: vertex
+  index: 3099
+r_knee_study:
+  type: vertex
+  index: 4495
+r_mknee_study:
+  type: vertex
+  index: 4634
+r_ankle_study:
+  type: vertex
+  index: 6727
+r_mankle_study:
+  type: vertex
+  index: 6599
+r_toe_study:
+  type: vertex
+  index: 6703
+r_5meta_study:
+  type: vertex
+  index: 6718
+r_calc_study:
+  type: vertex
+  index: 6786
+L_knee_study:
+  type: vertex
+  index: 1010
+L_mknee_study:
+  type: vertex
+  index: 1148
+L_ankle_study:
+  type: vertex
+  index: 3328
+L_mankle_study:
+  type: vertex
+  index: 3199
+L_toe_study:
+  type: vertex
+  index: 3303
+L_calc_study:
+  type: vertex
+  index: 3387
+L_5meta_study:
+  type: vertex
+  index: 3318
+r_lelbow_study:
+  type: vertex
+  index: 5090
+L_lelbow_study:
+  type: vertex
+  index: 1621
+r_melbow_study:
+  type: vertex
+  index: 6471
+L_melbow_study:
+  type: vertex
+  index: 3013
+r_lwrist_study:
+  type: vertex
+  index: 5573
+L_lwrist_study:
+  type: vertex
+  index: 2112
+r_mwrist_study:
+  type: vertex
+  index: 5568
+L_mwrist_study:
+  type: vertex
+  index: 2108
+r_thigh1_study:
+  type: vertex
+  index: 4360
+r_thigh2_study:
+  type: vertex
+  index: 4445
+r_thigh3_study:
+  type: vertex
+  index: 4389
+L_thigh1_study:
+  type: vertex
+  index: 874
+L_thigh2_study:
+  type: vertex
+  index: 961
+L_thigh3_study:
+  type: vertex
+  index: 902
+r_sh1_study:
+  type: vertex
+  index: 4585
+r_sh2_study:
+  type: vertex
+  index: 4604
+r_sh3_study:
+  type: vertex
+  index: 4947
+L_sh1_study:
+  type: vertex
+  index: 1101
+L_sh2_study:
+  type: vertex
+  index: 1117
+L_sh3_study:
+  type: vertex
+  index: 1474
+RHJC_study:
+  type: joint
+  index: 2
+LHJC_study:
+  type: joint
+  index: 1

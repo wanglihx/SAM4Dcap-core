@@ -1,0 +1,4 @@
+cd /root/TVB/wanglihx/SAM4Dcap/output_viz
+python -m http.server 8093 --bind 127.0.0.1
+
+http://127.0.0.1:8093/webviz_pipeline2/

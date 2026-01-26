@@ -1,0 +1,1 @@
+/usr/bin/python3 -m http.server 8083 --bind 127.0.0.1 --directory /root/TVB/SAM4Dcap/select/viewer

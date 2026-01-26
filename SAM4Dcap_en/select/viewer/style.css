@@ -1,0 +1,252 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0f14;
+  --panel: #0f1620;
+  --border: #1e2a39;
+  --text: #e6edf3;
+  --muted: #9fb0c3;
+  --accent: #66c2ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input,
+button,
+textarea {
+  font: inherit;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans SC", Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, rgba(15, 22, 32, 0.96), rgba(15, 22, 32, 0.86));
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.row.small-gap {
+  gap: 6px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.group.grow {
+  flex: 1;
+}
+
+label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+input[type="text"],
+input:not([type]) {
+  height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #0b121b;
+  color: var(--text);
+  outline: none;
+}
+
+button {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #132235;
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: #2d425d;
+}
+
+button.block {
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #0b121b;
+  color: var(--text);
+  resize: vertical;
+}
+
+.meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.35;
+  white-space: pre-wrap;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  height: calc(100% - 86px);
+}
+
+.panel {
+  border-right: 1px solid var(--border);
+}
+
+.sidebar {
+  padding: 14px;
+  overflow: auto;
+  background: var(--panel);
+}
+
+.viewer-panel {
+  display: flex;
+  flex-direction: column;
+  border-right: none;
+}
+
+.viewer {
+  position: relative;
+  flex: 1;
+  min-height: 400px;
+}
+
+.hint {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.hint.mini {
+  border-top: none;
+  padding: 6px 0 0;
+  font-size: 11px;
+}
+
+.section {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: #0c141e;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  color: var(--text);
+}
+
+.check input {
+  transform: translateY(1px);
+}
+
+.filter {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.marker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 44vh;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  background: #0b121b;
+}
+
+.marker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  padding: 4px 6px;
+  border-radius: 8px;
+}
+
+.marker-item:hover {
+  background: rgba(102, 194, 255, 0.08);
+}
+
+.marker-item code {
+  color: var(--accent);
+}
+
+.manual-status {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+  background: #0b121b;
+}
+
+.selected {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #0b121b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.selected-title {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.label {
+  color: var(--text);
+  font-size: 11px;
+  padding: 2px 6px;
+  background: rgba(15, 22, 32, 0.7);
+  border: 1px solid rgba(30, 42, 57, 0.9);
+  border-radius: 8px;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}

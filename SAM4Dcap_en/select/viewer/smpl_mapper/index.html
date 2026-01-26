@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SMPL ↔ OpenCap 43 markers: manual mapping</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <div class="row">
+        <div class="group grow">
+          <label>OpenCap / OpenSim scene JSON</label>
+          <input id="opencapScenePath" value="../scene_LaiUhlrich2022_generic.json" />
+        </div>
+        <div class="group grow">
+          <label>SMPL template mesh JSON</label>
+          <input id="smplMeshPath" value="smpl_template_mesh.json" />
+        </div>
+        <button id="load">Load</button>
+        <button id="exportJson">Export JSON</button>
+        <button id="exportCsv">Export CSV</button>
+      </div>
+      <div class="row row2">
+        <div class="group grow">
+          <label>Import JSON (resume labeling)</label>
+          <input id="importJson" type="file" accept=".json,application/json" />
+        </div>
+        <div class="group">
+          <label>Layout</label>
+          <select id="layoutMode">
+            <option value="overlay" selected>Overlay (label after alignment)</option>
+            <option value="split">Side-by-side (compare)</option>
+          </select>
+        </div>
+        <div class="group">
+          <label>Split distance</label>
+          <input id="splitDistance" type="number" min="0" max="5" step="0.05" value="1.2" />
+        </div>
+        <div class="group">
+          <label>SMPL initial Y rotation</label>
+          <select id="smplYawPreset">
+            <option value="0">0°</option>
+            <option value="-90" selected>-90° (common)</option>
+            <option value="90">90°</option>
+            <option value="180">180°</option>
+          </select>
+        </div>
+        <div class="group">
+          <label>Scale</label>
+          <label class="check inline"><input id="lockScaleToBsm" type="checkbox" />Lock (BSM C7-to-ground)</label>
+        </div>
+        <button id="bboxAlign">Rough align (BBox)</button>
+        <button id="fitAlign">Fit align (mapped points)</button>
+        <button id="resetSmpl">Reset SMPL</button>
+        <button id="fitCamera">Fit camera</button>
+      </div>
+      <div id="meta" class="meta">Not loaded</div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel sidebar">
+        <div class="section">
+          <div class="section-title">Display</div>
+          <div class="two-col">
+            <div>
+              <div class="sub-title">OpenCap</div>
+              <label class="check"><input id="showOpenCapMesh" type="checkbox" />Segment meshes (VTP)</label>
+              <label class="check"><input id="showOpenCapSkeleton" type="checkbox" checked />Skeleton</label>
+              <label class="check"><input id="showOpenCapMarkers" type="checkbox" checked />markers</label>
+              <label class="check"><input id="showOpenCapLabels" type="checkbox" />Marker names</label>
+            </div>
+            <div>
+              <div class="sub-title">SMPL</div>
+              <label class="check"><input id="showSmplMesh" type="checkbox" checked />mesh</label>
+              <label class="check"><input id="showSmplWireframe" type="checkbox" />Wireframe</label>
+              <label class="check"><input id="showMappedPoints" type="checkbox" checked />Mapped points</label>
+            </div>
+          </div>
+          <label class="check"><input id="showGrid" type="checkbox" checked />Grid</label>
+          <label class="check"><input id="showAxes" type="checkbox" checked />Axes</label>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Annotation</div>
+          <div class="selected">
+            <span class="selected-title">Current marker</span>
+            <code id="selectedMarker">(none)</code>
+          </div>
+          <div class="selected">
+            <span class="selected-title">SMPL pick</span>
+            <code id="selectedSmpl">(none)</code>
+          </div>
+          <div class="row buttons">
+            <button id="clearCurrent">Clear current</button>
+            <button id="clearAll">Clear all</button>
+          </div>
+          <label class="check"><input id="autoAdvance" type="checkbox" checked />After picking SMPL, auto-advance to next unlabelled marker</label>
+          <div class="hint small">Usage: pick a marker from the list/3D, then click on the SMPL mesh. Export supports vertex + face + barycentric.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Marker size</div>
+          <input id="markerSize" type="range" min="0.005" max="0.06" step="0.001" value="0.02" />
+          <div class="hint small">Drag to adjust OpenCap marker sphere radius</div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Markers (43)</div>
+          <input id="markerFilter" class="filter" placeholder="Search (e.g., C7 / ASIS / knee)" />
+          <div id="markerList" class="marker-list"></div>
+        </div>
+      </aside>
+
+      <section class="panel viewer-panel">
+        <div id="viewer" class="viewer"></div>
+        <div class="hint">
+          Drag to rotate, scroll to zoom, right-click to pan. Click an OpenCap marker to select, then click the SMPL mesh to label.
+        </div>
+      </section>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
