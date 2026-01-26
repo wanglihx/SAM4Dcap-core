@@ -8,9 +8,11 @@ This project performs training-free biomechanics analysis from monocular video.
 
 # Quick demo
 Monocular video results adapted to the opencap backend:
+```bash
 cd TVB/SAM4Dcap/output_viz
 python -m http.server 8088 --bind 127.0.0.1
 open http://127.0.0.1:8088/webviz_pipeline2/
+```
 
 # Prepare
 
@@ -60,7 +62,9 @@ TVB/Readme_modified/README.md
 
 ### Models
 SMPL model download: https://smpl.is.tue.mpg.de/
-Convert to the chumpy-free version with: python TVB/MHRtoSMPL/convert_smpl_chumpy_free.py
+Convert to the chumpy-free version with: 
+
+`python TVB/MHRtoSMPL/convert_smpl_chumpy_free.py`
 
 Model path checkpoints:
 TVB/Readme_modified/checkpoints.txt
@@ -70,19 +74,23 @@ TVB/Readme_modified/checkpoints.txt
 Double-check paths before running:
 TVB/Readme_modified/check_again.txt
 
-Adapt AddBiomechanic with 105 keypoints: 
-
+- Adapt AddBiomechanic with 105 keypoints:
+```bash
 cd SAM4Dcap
 bash pipeline1.sh
-
-Adapt opencap with 43 keypoints: 
+```
+- Adapt opencap with 43 keypoints:
+```bash
 bash pipeline2.sh
-
-opencap reproduction: 
+```
+- opencap reproduction:
+```bash
 bash opencap.sh
-
-Custom keypoints: 
+```
+- Custom keypoints:
+```bash
 bash select.sh
+```
 
 # Quick setup
 Because of GitHub repository size limits, we will upload the complete project code and environments to a cloud drive. Contact wangli1@stu.scu.edu.cn to reproduce the project more easily.
