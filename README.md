@@ -62,10 +62,14 @@ Full environment files will be uploaded to a cloud drive later.
 - https://github.com/MarilynKeller/SMPL2AddBiomechanics
 - https://github.com/keenon/AddBiomechanic
 
-- Except for opensim （没修改）, all repositories have modified or new code. For details see: TVB/Readme_modified/README.md
+- Except for OpenSim (which remains unchanged), all repositories contain modified or new code. For detailed documentation, please refer to: TVB/Readme_modified/README.md.
 
-修改的版本已经上传到本仓库的分支；对于Add需要从xxx下载, 并解压到add/fronted
+- The modified versions have been uploaded to the branches of this repository. For Addbiomechanics, please download the file from [xxx] and extract the file to the
 
+```bash
+root/Addbiomechanics/fronted
+```
+  
 #### Models
 SMPL model download: https://smpl.is.tue.mpg.de/
 Convert to the chumpy-free version with: 
@@ -127,7 +131,7 @@ bash select.sh
 https://github.com/user-attachments/assets/853ba90e-bb06-4caa-b2e2-ef391232b23f
 
 
-- 对齐效果:
+- Align:
 
 ```bash
 cd /root/autodl-tmp/SAM4Dcap/align/webviz_compare
