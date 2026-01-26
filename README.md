@@ -69,7 +69,7 @@ TVB/Readme_modified/README.md
 - The modified versions have been uploaded to the branches of this repository. For Addbiomechanics, please download the file from [xxx] and extract the file to the
 
 ```bash
-root/Addbiomechanics/fronted
+TVB/Addbiomechanics/fronted
 ```
   
 #### Models
