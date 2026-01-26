@@ -66,7 +66,7 @@ Full environment files will be uploaded to a cloud drive later.
 ```bash
 TVB/Readme_modified/README.md
 ```
-- The modified versions have been uploaded to the branches of this repository. For Addbiomechanics, please download the file from [xxx] and extract the file to the
+- The modified versions have been uploaded to the branches of this repository. For Addbiomechanics, please download the file from https://figshare.com/articles/software/fronted/31150132?file=61359931 and extract the file to the
 
 ```bash
 TVB/Addbiomechanics/fronted
