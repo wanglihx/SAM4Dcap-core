@@ -71,6 +71,8 @@ Double-check paths before running:
 TVB/Readme_modified/check_again.txt
 
 Adapt AddBiomechanic with 105 keypoints: 
+
+cd SAM4Dcap
 bash pipeline1.sh
 
 Adapt opencap with 43 keypoints: 
