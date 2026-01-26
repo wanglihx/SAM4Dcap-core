@@ -7,9 +7,18 @@ Paper in progress.
 This project performs training-free biomechanics analysis from monocular video.
 
 
-![2026-01-26T12_46_39 279Z-827938](https://github.com/user-attachments/assets/5310c0be-dbed-4304-bd30-52c63c1807cd) 
-
-![2026-01-26T12_46_39 279Z-827938](https://github.com/user-attachments/assets/25ba24d9-c04c-4b7c-9e6e-71e06c910603)
+<table style="width: 100%;">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/5310c0be-dbed-4304-bd30-52c63c1807cd" width="100%" />
+      <br />图 1 说明
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/25ba24d9-c04c-4b7c-9e6e-71e06c910603" width="100%" />
+      <br />图 2 说明
+    </td>
+  </tr>
+</table>
 
 ## Quick demo
 Monocular video results adapted to the opencap backend:
