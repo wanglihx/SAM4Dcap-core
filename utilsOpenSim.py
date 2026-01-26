@@ -73,6 +73,10 @@ def runScaleTool(pathGenericSetupFile, pathGenericModel, subjectMass,
                 
     # Setup scale tool.
     scaleTool = opensim.ScaleTool(pathGenericSetupFile)
+    # ScaleTool loads pathToSubject from the setup file directory; this breaks
+    # absolute paths on Linux by prefixing them. We pass absolute paths
+    # throughout, so clear it.
+    scaleTool.setPathToSubject('')
     scaleTool.setName(scaledModelName)
     scaleTool.setSubjectMass(subjectMass)
     scaleTool.setSubjectHeight(subjectHeight)
@@ -134,8 +138,14 @@ def runScaleTool(pathGenericSetupFile, pathGenericModel, subjectMass,
                       is not applied.'.format(meas.getName()))
     # Run scale tool.                      
     scaleTool.printToXML(pathOutputSetup)            
-    command = 'opensim-cmd -o error' + ' run-tool ' + pathOutputSetup
-    os.system(command)
+    try:
+        scaleTool.run()
+    except Exception:
+        # Fallback to CLI if available.
+        command = 'opensim-cmd -o error' + ' run-tool ' + pathOutputSetup
+        os.system(command)
+        if not os.path.exists(pathOutputModel):
+            raise
     
     # Sanity check
     scaled_model = opensim.Model(pathOutputModel)
@@ -225,8 +235,13 @@ def runIKTool(pathGenericSetupFile, pathScaledModel, pathTRCFile,
     IKTool.set_report_marker_locations(False)
     IKTool.set_output_motion_file(pathOutputMotion)
     IKTool.printToXML(pathOutputSetup)
-    command = 'opensim-cmd -o error' + ' run-tool ' + pathOutputSetup
-    os.system(command)
+    try:
+        IKTool.run()
+    except Exception:
+        command = 'opensim-cmd -o error' + ' run-tool ' + pathOutputSetup
+        os.system(command)
+        if not os.path.exists(pathOutputMotion):
+            raise
     
     return pathOutputMotion, pathScaledModelWithoutPatella
     

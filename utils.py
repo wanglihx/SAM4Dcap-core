@@ -77,14 +77,23 @@ def getOpenPoseDirectory(isDocker=False):
     return openPoseDirectory
 
 def getMMposeDirectory(isDocker=False):
+    # Allow overriding via env var for local deployments.
+    mmposeDirectory = os.environ.get('MMPOSE_DIRECTORY') or os.environ.get('MMPOSE_DIR')
+    if mmposeDirectory:
+        return mmposeDirectory
+
+    # Default: use the bundled checkpoints/configs shipped with this repo.
+    repo_dir = os.path.dirname(os.path.abspath(__file__))
+    bundled = os.path.join(repo_dir, 'mmpose')
+    if os.path.isdir(bundled):
+        return bundled
+
+    # Backward-compatible fallback for historic local paths.
     computername = socket.gethostname()
-    
-    # Paths to OpenPose folder for local testing.
     if computername == "clarkadmin-MS-7996":
-        mmposeDirectory = "/home/clarkadmin/Documents/MyRepositories/MoVi_analysis/model_ckpts"
-    else:
-        mmposeDirectory = ''
-    return mmposeDirectory
+        return "/home/clarkadmin/Documents/MyRepositories/MoVi_analysis/model_ckpts"
+
+    return ''
 
 def loadCameraParameters(filename):
     open_file = open(filename, "rb")
@@ -1803,4 +1812,3 @@ def makeRequestWithRetry(method, url,
                                     files=files)
     response.raise_for_status()
     return response
-

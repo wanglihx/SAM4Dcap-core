@@ -40,6 +40,7 @@ def main(sessionName, trialName, trial_id, cameras_to_use=['all'],
          poseDetector='OpenPose', resolutionPoseDetection='default', 
          scaleModel=False, bbox_thr=0.8, augmenter_model='v0.3',
          genericFolderNames=False, offset=True, benchmark=False,
+         generateVideo=True,
          dataDir=None, overwriteAugmenterModel=False,
          filter_frequency='default', overwriteFilterFrequency=False,
          scaling_setup='upright_standing_pose', overwriteScalingSetup=False,
@@ -62,7 +63,7 @@ def main(sessionName, trialName, trial_id, cameras_to_use=['all'],
     resolutionPoseDetection = resolutionPoseDetection
     # Set to False to only generate the json files (default is True).
     # This speeds things up and saves storage space.
-    generateVideo = True
+    generateVideo = generateVideo
     # This is a hack to handle a mismatch between the use of mmpose and hrnet,
     # and between the use of OpenPose and openpose.
     if poseDetector == 'hrnet':

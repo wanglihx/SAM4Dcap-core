@@ -1435,11 +1435,8 @@ def triangulateMultiviewVideo(CameraParamDict,keypointDict,imageScaleFactor=1,
             
             # Only rewrite if camera in cams2use and wasn't kicked out earlier
             if (camName in cams2Use or cams2Use[0] == 'all') and startEndFrames[camName] != None:
-                _, inputName = os.path.split(inputPath)
-                inputRoot,inputExt = os.path.splitext(inputName)
-                
-                # Let's use mp4 since we write for the internet
-                outputFileName = inputRoot + '_syncd_' + camName + ".mp4 "# inputExt
+                # 输出同步视频时强制使用 trialName 作为前缀，避免因原始文件名不同导致下游路径不一致
+                outputFileName = f"{trialName}_syncd_{camName}.mp4"
                 
                 thisStartFrame = startInd + startEndFrames[camName][0]
                 

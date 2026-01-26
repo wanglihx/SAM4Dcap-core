@@ -3,6 +3,7 @@ import cv2
 import shutil
 import pickle
 import numpy as np
+import torch
 import json
 import sys
 import time
@@ -336,13 +337,24 @@ def runMMposeVideo(
             c_path = os.path.dirname(os.path.abspath(__file__))
             sys.path.append(os.path.join(c_path, 'mmpose'))
             from utilsMMpose import detection_inference, pose_inference
+
+            device = 'cpu'
+            if torch.cuda.is_available():
+                try:
+                    major, _ = torch.cuda.get_device_capability(0)
+                    if major >= 3:
+                        device = 'cuda:0'
+                    else:
+                        print("Warning: CUDA device capability too low; using CPU.")
+                except Exception as e:
+                    print(f"Warning: Unable to query CUDA device capability ({e}); using CPU.")
             # Run human detection.
             pathModelCkptPerson = os.path.join(pathMMpose, model_ckpt_person)
             bboxPath = os.path.join(pathOutputBox, trialPrefix + '.pkl')
             full_model_config_person = os.path.join(c_path, 'mmpose',
                                                     model_config_person)
             detection_inference(full_model_config_person, pathModelCkptPerson,
-                                videoFullPath, bboxPath)        
+                                videoFullPath, bboxPath, device=device)
             
             # Run pose detection.     
             pathModelCkptPose = os.path.join(pathMMpose, model_ckpt_pose)
@@ -352,7 +364,8 @@ def runMMposeVideo(
                                                   model_config_pose)
             pose_inference(full_model_config_pose, pathModelCkptPose, 
                             videoFullPath, bboxPath, pklPath, videoOutPath, 
-                            bbox_thr=bbox_thr, visualize=generateVideo)
+                            bbox_thr=bbox_thr, visualize=generateVideo,
+                            device=device)
             
         # Post-process data to have OpenPose-like file structure.        
         arrangeMMposePkl(pklPath, ppPklPath)
