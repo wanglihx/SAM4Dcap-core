@@ -14,7 +14,7 @@ This project performs training-free biomechanics analysis from monocular video.
       <br />Cam 1
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/25ba24d9-c04c-4b7c-9e6e-71e06c910603" width="100%" />
+      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="100%" />
       <br />Visualisation
     </td>
   </tr>
@@ -116,7 +116,7 @@ bash TVB/SAM4Dcap/opencap.sh
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/25ba24d9-c04c-4b7c-9e6e-71e06c910603" width="100%" />
+      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="100%" />
       <br />Monocular Video: http://127.0.0.1:8093/webviz/
     </td>
     <td align="center">
