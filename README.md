@@ -52,7 +52,9 @@ Full environment files will be uploaded to a cloud drive later.
 
 #### Models
 SMPL model download: https://smpl.is.tue.mpg.de/
-Convert to the chumpy-free version with: `python TVB/MHRtoSMPL/convert_smpl_chumpy_free.py`
+Convert to the chumpy-free version with: 
+
+`python TVB/MHRtoSMPL/convert_smpl_chumpy_free.py`
 
 Model path checkpoints:
 TVB/Readme_modified/checkpoints.txt
