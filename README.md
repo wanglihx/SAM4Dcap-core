@@ -43,8 +43,10 @@ https://github.com/opensim-org/opensim-core
 https://github.com/MarilynKeller/SMPL2AddBiomechanics
 https://github.com/keenon/AddBiomechanic
 
-Except for opensim, all repositories have modified or new code. For details see:
+Except for opensim （没修改）, all repositories have modified or new code. For details see:
 TVB/Readme_modified/README.md
+
+修改的版本已经上传到本仓库的分支；对于Add需要从xxx下载, 并解压到add/fronted
 
 ### Models
 SMPL model download: https://smpl.is.tue.mpg.de/
