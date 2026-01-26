@@ -105,7 +105,7 @@ bash pipeline2.sh
 - opencap reproduction (Binocular Video):
 ```bash
 bash opencap.sh
-
+```
 <table style="width: 100%;">
   <tr>
     <td align="center">
@@ -119,8 +119,6 @@ bash opencap.sh
   </tr>
 </table>
 
-
-```
 - Custom keypoints:
 ```bash
 bash select.sh
