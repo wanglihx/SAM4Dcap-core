@@ -96,11 +96,11 @@ bash TVB/SAM4Dcap/pipeline1.sh
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/c7a8dcde-5a8e-4d23-bf89-031994813491" width="500" />
+      <img src="https://github.com/user-attachments/assets/c7a8dcde-5a8e-4d23-bf89-031994813491" width="450" />
       <br />local(Linux): http: //localhost:3088/
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" width="500" />
+      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" width="450" />
       <br />online: https: //app.addbiomechanics.org/
     </td>
   </tr>
