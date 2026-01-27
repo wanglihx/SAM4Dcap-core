@@ -100,7 +100,7 @@ bash TVB/SAM4Dcap/pipeline1.sh
       <br />local(Linux): http: //localhost:3088/
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" width="100%" />
+      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" width="300" />
       <br />online: https: //app.addbiomechanics.org/
     </td>
   </tr>
