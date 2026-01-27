@@ -79,7 +79,9 @@ Convert to the chumpy-free version with:
 `python TVB/MHRtoSMPL/convert_smpl_chumpy_free.py`
 
 Model path checkpoints:
+```bash
 TVB/Readme_modified/checkpoints.txt
+```
 
 ## One-click run + visualization
 
