@@ -97,7 +97,7 @@ bash TVB/SAM4Dcap/pipeline1.sh
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/c910cdaf-92db-4c5b-927a-c4ca9115827e" width="100%" />
+      <img src="https://github.com/user-attachments/assets/c7a8dcde-5a8e-4d23-bf89-031994813491" width="100%" />
       <br />local(Linux): http: //localhost:3088/
     </td>
     <td align="center">
