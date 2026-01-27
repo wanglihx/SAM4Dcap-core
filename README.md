@@ -1,4 +1,4 @@
-# TVB: Training-free Video to Biomechanics Twin System via Monocular Camera based on SAM3Dbody
+# TVB: Training-free Video-to-Biomechanical Twin System via Monocular Camera based on SAM3Dbody
 
 ## Paper
 Paper in progress.
