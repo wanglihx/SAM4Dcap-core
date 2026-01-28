@@ -10,11 +10,11 @@ This project performs training-free biomechanics analysis from monocular video.
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/85e59fb5-3e18-4963-96b7-f59c6b42601b" width="100%" />
+      <img src="https://github.com/user-attachments/assets/85e59fb5-3e18-4963-96b7-f59c6b42601b" width="450" />
       <br />Cam 1
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="100%" />
+      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="450" />
       <br />Visualisation
     </td>
   </tr>
@@ -117,11 +117,11 @@ bash TVB/SAM4Dcap/opencap.sh
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="100%" />
+      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="450" />
       <br />Monocular Video: http://127.0.0.1:8093/webviz/
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/72f2379e-6c42-4784-8d9f-279a0c9fb662" width="100%"/>
+      <img src="https://github.com/user-attachments/assets/72f2379e-6c42-4784-8d9f-279a0c9fb662" width="450"/>
       <br />Binocular Video: http://127.0.0.1:8090/web/webviz/
     </td>
   </tr>
