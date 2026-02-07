@@ -7,14 +7,14 @@ Paper in progress.
 ## What this project does
 This project performs training-free biomechanics analysis from monocular video.
 
-<table style="width: 100%;">
+<table width="100%" style="width:100%; table-layout:fixed; border-collapse:collapse;">
   <tr>
-    <td align="center">
-      <img src="https://github.com/user-attachments/assets/85e59fb5-3e18-4963-96b7-f59c6b42601b" width="450" />
+    <td align="center" width="50%" style="width:50%; padding:0 6px;">
+      <img src="https://github.com/user-attachments/assets/85e59fb5-3e18-4963-96b7-f59c6b42601b" style="max-width:100%; height:auto;" />
       <br />Cam 1
     </td>
-    <td align="center">
-      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="450" />
+    <td align="center" width="50%" style="width:50%; padding:0 6px;">
+      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" style="max-width:100%; height:auto;" />
       <br />Visualisation
     </td>
   </tr>
