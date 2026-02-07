@@ -93,18 +93,19 @@ TVB/Readme_modified/check_again.txt
 bash TVB/SAM4Dcap/pipeline1.sh
 ```
 
-<table style="width: 100%;">
+<table width="100%" style="width:100%; table-layout:fixed; border-collapse:collapse;">
   <tr>
-    <td align="center">
-      <img src="https://github.com/user-attachments/assets/c7a8dcde-5a8e-4d23-bf89-031994813491" width="450" />
-      <br />local(Linux): http: //localhost:3088/
+    <td align="center" width="50%" style="width:50%; padding:0 6px;">
+      <img src="https://github.com/user-attachments/assets/c7a8dcde-5a8e-4d23-bf89-031994813491" style="max-width:100%; height:auto;" />
+      <br />local (Linux): http://localhost:3088/
     </td>
-    <td align="center">
-      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" width="450" />
-      <br />online: https: //app.addbiomechanics.org/
+    <td align="center" width="50%" style="width:50%; padding:0 6px;">
+      <img src="https://github.com/user-attachments/assets/6399d47d-cdc1-4227-8599-76736a58dfea" style="max-width:100%; height:auto;" />
+      <br />online: https://app.addbiomechanics.org/
     </td>
   </tr>
 </table>
+
 
 - Adapt opencap with 43 keypoints (Monocular Video):
 ```bash
