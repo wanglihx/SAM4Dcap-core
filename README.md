@@ -2,10 +2,10 @@
 
 ## Paper
 Paper in progress.
+![本地图片描述](example/1.png)
 
 ## What this project does
 This project performs training-free biomechanics analysis from monocular video.
-![本地图片描述](example/1.png)
 
 <table style="width: 100%;">
   <tr>
