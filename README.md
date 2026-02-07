@@ -106,7 +106,6 @@ bash TVB/SAM4Dcap/pipeline1.sh
   </tr>
 </table>
 
-
 - Adapt opencap with 43 keypoints (Monocular Video):
 ```bash
 bash TVB/SAM4Dcap/pipeline2.sh
@@ -115,14 +114,14 @@ bash TVB/SAM4Dcap/pipeline2.sh
 ```bash
 bash TVB/SAM4Dcap/opencap.sh
 ```
-<table style="width: 100%;">
+<table width="100%" style="width:100%; table-layout:fixed; border-collapse:collapse;">
   <tr>
-    <td align="center">
-      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" width="450" />
+    <td align="center" width="50%" style="width:50%; padding:0 6px;">
+      <img src="https://github.com/user-attachments/assets/b493b0c1-44f8-4b76-b5ba-22631a100170" style="max-width:100%; height:auto;" />
       <br />Monocular Video: http://127.0.0.1:8093/webviz/
     </td>
-    <td align="center">
-      <img src="https://github.com/user-attachments/assets/72f2379e-6c42-4784-8d9f-279a0c9fb662" width="450"/>
+    <td align="center" width="50%" style="width:50%; padding:0 6px;">
+      <img src="https://github.com/user-attachments/assets/72f2379e-6c42-4784-8d9f-279a0c9fb662" style="max-width:100%; height:auto;" />
       <br />Binocular Video: http://127.0.0.1:8090/web/webviz/
     </td>
   </tr>
