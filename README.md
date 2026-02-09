@@ -25,7 +25,7 @@ This project performs training-free biomechanics analysis from monocular video.
 Monocular video results adapted to the opencap backend:
 
 ```bash
-cd TVB/SAM4Dcap/output_viz
+cd SAM4Dcap-core/SAM4Dcap/output_viz
 python -m http.server 8088 --bind 127.0.0.1
 open http://127.0.0.1:8088/webviz_pipeline2/
 ```
@@ -38,10 +38,10 @@ open http://127.0.0.1:8088/webviz_pipeline2/
 
 ### Environment
 Environment paths and source projects
-- TVB/envs/body4d: https://github.com/gaomingqi/sam-body4d
-- TVB/envs/MHRtoSMPL: https://github.com/facebookresearch/MHR
-- TVB/envs/opencap: https://github.com/opencap-org/opencap-core
-- TVB/envs/opensim: https://github.com/opensim-org/opensim-core
+- SAM4Dcap-core/envs/body4d: https://github.com/gaomingqi/sam-body4d
+- SAM4Dcap-core/envs/MHRtoSMPL: https://github.com/facebookresearch/MHR
+- SAM4Dcap-core/envs/opencap: https://github.com/opencap-org/opencap-core
+- SAM4Dcap-core/envs/opensim: https://github.com/opensim-org/opensim-core
 
 We compiled with CUDA for the GPU architecture used in our experiments (sm_120) using these versions:
 - MHRtoSMPL: Python 3.12.12; PyTorch 2.8.0+cu128; CUDA 12.8
@@ -63,34 +63,34 @@ Full environment files will be uploaded to a cloud drive later.
 
 - Except for OpenSim (which remains unchanged), all repositories contain modified or new code. For detailed documentation, please refer to:
 ```bash
-TVB/Readme_modified/README.md
+SAM4Dcap-core/Readme_modified/README.md
 ```
 - The modified versions have been uploaded to the branches of this repository. For Addbiomechanics, please download the file from https://figshare.com/articles/software/fronted/31150132?file=61359931 and extract the file to the
 
 ```bash
-TVB/Addbiomechanics/fronted
+SAM4Dcap-core/Addbiomechanics/fronted
 ```
   
 #### Models
 SMPL model download: https://smpl.is.tue.mpg.de/
 Convert to the chumpy-free version with: 
 
-`python TVB/MHRtoSMPL/convert_smpl_chumpy_free.py`
+`python SAM4Dcap-core/MHRtoSMPL/convert_smpl_chumpy_free.py`
 
 Model path checkpoints:
 ```bash
-TVB/Readme_modified/checkpoints.txt
+SAM4Dcap-core/Readme_modified/checkpoints.txt
 ```
 
 ## One-click run + visualization
 
 Double-check paths before running:
 ```bash
-TVB/Readme_modified/check_again.txt
+SAM4Dcap-core/Readme_modified/check_again.txt
 ```
 - Adapt AddBiomechanic with 105 keypoints (Monocular Video):
 ```bash
-bash TVB/SAM4Dcap/pipeline1.sh
+bash SAM4Dcap-core/SAM4Dcap/pipeline1.sh
 ```
 
 <table width="100%" style="width:100%; table-layout:fixed; border-collapse:collapse;">
@@ -108,11 +108,11 @@ bash TVB/SAM4Dcap/pipeline1.sh
 
 - Adapt opencap with 43 keypoints (Monocular Video):
 ```bash
-bash TVB/SAM4Dcap/pipeline2.sh
+bash SAM4Dcap-core/SAM4Dcap/pipeline2.sh
 ```
 - opencap reproduction (Binocular Video):
 ```bash
-bash TVB/SAM4Dcap/opencap.sh
+bash SAM4Dcap-core/SAM4Dcap/opencap.sh
 ```
 <table width="100%" style="width:100%; table-layout:fixed; border-collapse:collapse;">
   <tr>
@@ -129,7 +129,7 @@ bash TVB/SAM4Dcap/opencap.sh
 
 - Tool for custom keypoints:
 ```bash
-bash TVB/SAM4Dcap/select.sh
+bash SAM4Dcap-core/SAM4Dcap/select.sh
 ```
 
 https://github.com/user-attachments/assets/853ba90e-bb06-4caa-b2e2-ef391232b23f
@@ -138,7 +138,7 @@ https://github.com/user-attachments/assets/853ba90e-bb06-4caa-b2e2-ef391232b23f
 - Align:
 
 ```bash
-cd TVB/SAM4Dcap/align/webviz_compare
+cd SAM4Dcap-core/SAM4Dcap/align/webviz_compare
 python -m http.server 8092 --bind 127.0.0.1
 ```
 
