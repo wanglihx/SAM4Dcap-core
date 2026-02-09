@@ -49,6 +49,8 @@ We compiled with CUDA for the GPU architecture used in our experiments (sm_120) 
 - opencap: Python 3.9.25; PyTorch 2.8.0+cu128; CUDA 12.8
 - opensim: Python 3.10.19; PyTorch 2.9.1+cu128; CUDA 12.8
 
+We recommend adapting the setup according to your GPU configuration (at least 24 GB of memory) and the official library environments mentioned above.
+
 Full environment files will be uploaded to a cloud drive later.
 
 ### Codebases and models
