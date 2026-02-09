@@ -1,4 +1,4 @@
-# SAM4Dcap: TVB--Training-free Video-to-Biomechanical Twin System via Monocular Camera based on SAM3Dbody
+# SAM4Dcap: TVB--Training-free Video-to-Biomechanical (TVB) Twin System via Monocular Camera based on SAM3Dbody
 
 ## Paper
 Paper in progress.
