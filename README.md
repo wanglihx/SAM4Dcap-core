@@ -1,4 +1,4 @@
-# SAM4Dcap: Training-free Video to Biomechanical Twin System via Monocular Camera based on SAM3Dbody
+# SAM4Dcap: Training-free Biomechanical Twin System from Monocular Video
 
 ## Paper
 Paper in progress.
