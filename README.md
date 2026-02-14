@@ -164,4 +164,19 @@ Thanks to
 - https://github.com/MarilynKeller/SMPL2AddBiomechanics
 - https://github.com/keenon/AddBiomechanic
 
+## Citation
+
+If you use this project in your research, please cite it as follows:
+
+### BibTeX
+```bibtex
+@misc{wang2026sam4dcap,
+  author = {Wang, Li and others},
+  title = {SAM4Dcap: Training-free Biomechanical Twin System from Monocular Video},
+  year = {2026},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{[https://github.com/wanglihx/SAM4Dcap-core](https://github.com/wanglihx/SAM4Dcap-core)}}
+}
+
 
