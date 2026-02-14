@@ -174,9 +174,8 @@ If you use this project in your research, please cite it as follows:
   author = {Wang, Li and others},
   title = {SAM4Dcap: Training-free Biomechanical Twin System from Monocular Video},
   year = {2026},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{[https://github.com/wanglihx/SAM4Dcap-core](https://github.com/wanglihx/SAM4Dcap-core)}}
+  note = {GitHub repository},
+  howpublished = {\url{https://github.com/wanglihx/SAM4Dcap-core}}
 }
 
 
