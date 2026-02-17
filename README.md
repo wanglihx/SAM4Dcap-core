@@ -170,12 +170,14 @@ If you use this project in your research, please cite it as follows:
 
 ### BibTeX
 ```bibtex
-@misc{wang2026sam4dcap,
-  author = {Wang, Li and others},
-  title = {SAM4Dcap: Training-free Biomechanical Twin System from Monocular Video},
-  year = {2026},
-  note = {GitHub repository},
-  howpublished = {\url{https://github.com/wanglihx/SAM4Dcap-core}}
+@misc{wang2026sam4dcaptrainingfreebiomechanicaltwin,
+      title={SAM4Dcap: Training-free Biomechanical Twin System from Monocular Video}, 
+      author={Li Wang and HaoYu Wang and Xi Chen and ZeKun Jiang and Kang Li and Jian Li},
+      year={2026},
+      eprint={2602.13760},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2602.13760}, 
 }
 
 
