@@ -1,7 +1,7 @@
 # SAM4Dcap: Training-free Biomechanical Twin System from Monocular Video
 
 ## Paper
-Paper has been submitted to arXiv (processing): [view0214.pdf](https://github.com/user-attachments/files/25315340/view0214.pdf)
+Paper has been submitted to arXiv: https://arxiv.org/abs/2602.13760
 
 ![本地图片描述](example/1.png)
 
